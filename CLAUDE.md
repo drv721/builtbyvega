@@ -85,6 +85,7 @@ If a task clearly warrants a different model than the one currently running, say
 | Brainstorming, copy, strategy, brand voice, V prompt design, long-form thinking | **Claude.ai chat** |
 | Visual work — UI mockups, layouts, logos, brand assets, design iterations | **Claude Design** (claude.ai/design) |
 | Real-time pairing, collaborative back-and-forth on a task | **CoWork** (within Claude app) |
+| Autonomous agent tasks; connecting messaging platforms (Slack, Discord, etc.) to Claude; running skills outside Claude Code | **OpenClaw** (openclaw.ai) — runs locally, own CLI and skills system. Note: Claude Pro/Max subscription usage cannot be piped through OpenClaw as of April 2026; use a separate API key. |
 
 If the task is clearly better suited to a different interface, say so upfront rather than attempting it in the wrong context.
 
@@ -142,3 +143,9 @@ If Daniel says something is incomplete or missing and you've already done a thor
 *"I searched X, Y, Z and found [summary]. What specifically is missing — I'll look for it directly."*
 
 Let Daniel steer the search rather than exhausting every possible location speculatively.
+
+### Never assume — look it up
+
+If an unfamiliar tool, term, product, or technology is mentioned and you're not certain what it is, **look it up before responding**. Do not guess, infer from context, or note it as a possible typo. Use WebSearch to get a confident answer first.
+
+This applies to: tool names, product names, CLI commands, platforms, features, integrations — anything where being wrong would send Daniel in the wrong direction.
