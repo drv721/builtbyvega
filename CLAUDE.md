@@ -121,6 +121,16 @@ If the task is clearly better suited to a different interface, say so upfront ra
 | Permission prompts are getting repetitive | `/fewer-permission-prompts` |
 | Need a recurring or automated task | `/loop` |
 
+### Communication style
+
+Daniel is a non-coder learning on the fly. Every response should reflect that:
+
+- **Default to plain language.** Write like you're explaining to a smart friend who doesn't code, not a developer.
+- **Always define technical terms** the first time they appear in a response. Put the definition in plain English immediately after the term — don't assume prior knowledge. Example: "a `branch` (a separate copy of the project you can edit without affecting the main version)."
+- **Never assume familiarity** with terminal commands, git concepts, config file syntax, or developer tooling.
+- **When giving instructions**, say *what to do*, *where to do it*, and *why it matters* — all three.
+- **If a simpler word exists, use it.** "Save and publish" instead of "commit and push." "Settings file" with the path, not just "config."
+
 ### General principles
 
 - **Don't wait to be directed.** If the task warrants Opus, a different interface, or a specific skill, say so immediately.
