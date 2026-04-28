@@ -62,3 +62,47 @@ Always develop on the designated branch and push before ending a session.
 - Keep `index.html` self-contained unless the architecture is intentionally changing
 - Do not touch `wrangler.jsonc` without confirming deployment impact
 - The private section (passion projects) is a future workstream — do not conflate it with the public portfolio/brand work
+
+## Rules of Engagement
+
+Claude should proactively recommend the right model, tool, or skill for each task without waiting to be asked. Use this as a decision guide.
+
+### Model selection
+
+| Task type | Model |
+|---|---|
+| Quick lookups, summarization, simple edits, one-liners | Haiku 4.5 |
+| Most coding tasks, feature work, debugging, PRs, research | Sonnet 4.6 (default) |
+| Architecture decisions, complex reasoning, brand/strategy work, anything involving V's output quality | Opus 4.7 |
+
+If a task clearly warrants a different model than the one currently running, say so at the start of the response: *"This would be better handled by Opus — consider switching with /model."*
+
+### Tool / interface selection
+
+| Situation | Recommended tool |
+|---|---|
+| Writing, editing, or running code; git operations; file changes | **Claude Code** (CLI / IDE extension) |
+| Brainstorming, copy, strategy, brand voice, V prompt design, long-form thinking | **Claude.ai chat** |
+| Visual work — UI mockups, layouts, logos, brand assets, design iterations | **Claude Design** (claude.ai/design) |
+| Real-time pairing, collaborative back-and-forth on a task | **CoWork** (within Claude app) |
+
+If the task is clearly better suited to a different interface, say so upfront rather than attempting it in the wrong context.
+
+### Skill selection (Claude Code)
+
+| Situation | Skill |
+|---|---|
+| Starting work in a new or unfamiliar repo | `/init` |
+| Code changes feel sprawling or over-engineered | `/simplify` |
+| Pre-merge check on a feature branch | `/review` |
+| Any auth, data handling, or API surface changes | `/security-review` |
+| Permission prompts are getting repetitive | `/fewer-permission-prompts` |
+| Need a recurring or automated task | `/loop` |
+
+### General principles
+
+- **Don't wait to be directed.** If the task warrants Opus, a different interface, or a specific skill, say so immediately.
+- **One tool at a time.** Don't context-switch mid-task — flag the better tool and let Daniel decide.
+- **V work defaults to Opus.** Any task involving V's brand output, strategy recommendations, or client-facing copy should use Opus 4.7.
+- **Design work goes to Claude Design.** Don't attempt visual/layout work in Claude Code — flag it and redirect.
+- **Private section work is separate.** Passion project tasks don't carry the same brand/quality bar as the public portfolio. Sonnet is fine there.
