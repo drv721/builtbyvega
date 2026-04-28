@@ -46,6 +46,27 @@ Config lives in `wrangler.jsonc` (pending merge via PR #1). Key settings:
 
 Cloudflare bindings (KV, D1, R2) are available but not yet configured.
 
+## MCP Servers
+
+Permanently configured in `~/.claude.json` (project scope):
+
+| MCP | Purpose |
+|---|---|
+| **Cloudflare** (`mcp.cloudflare.com`) | Manage Workers, KV, D1, R2, Pages, and Wrangler directly from Claude Code. First use requires OAuth to authorize your Cloudflare account. Works best from project root where `wrangler.jsonc` lives. |
+| **GitHub** (`api.githubcopilot.com/mcp/`) | Read/write issues, PRs, branches, and files. Used in every session — permanently configured so it's available outside CCR environments too. |
+
+**Memory MCP**: Hold off until V development begins and there's sufficient cross-session context worth persisting.
+
+## Session Start Hook
+
+`.claude/hooks/session-start.sh` runs at the start of every remote session and outputs:
+- Current git branch
+- Uncommitted/untracked file warnings
+- Unpushed commit count
+- Wrangler availability check
+
+Running synchronously — session waits for it to complete before starting (guarantees clean state check before any work begins).
+
 ## Open PRs to be aware of
 
 - **PR #1** — Cloudflare Workers autoconfig (`cloudflare/workers-autoconfig`) — not yet merged
