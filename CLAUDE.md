@@ -120,6 +120,12 @@ If the task is clearly better suited to a different interface, say so upfront ra
 | Any auth, data handling, or API surface changes | `/security-review` |
 | Permission prompts are getting repetitive | `/fewer-permission-prompts` |
 | Need a recurring or automated task | `/loop` |
+| New page, hi-fi mockup, prototype, animation, brand design | `/huashu-design` |
+| Polish existing UI (typeset, animate, colorize, layout) | `/impeccable` |
+| Frontend looks generic or AI-ish | `/taste` |
+| Need a UI style, color palette, or font pairing | `/ui-ux-pro-max` |
+| Write or run Playwright browser tests | `/playwright` |
+| Visual QA before deploying | `/design-review` |
 
 ### Communication style
 
