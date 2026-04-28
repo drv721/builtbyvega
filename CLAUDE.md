@@ -106,3 +106,39 @@ If the task is clearly better suited to a different interface, say so upfront ra
 - **V work defaults to Opus.** Any task involving V's brand output, strategy recommendations, or client-facing copy should use Opus 4.7.
 - **Design work goes to Claude Design.** Don't attempt visual/layout work in Claude Code — flag it and redirect.
 - **Private section work is separate.** Passion project tasks don't carry the same brand/quality bar as the public portfolio. Sonnet is fine there.
+
+## Working Style
+
+### Always be specific with directions
+
+When giving instructions involving tools, terminals, or file locations, always specify exactly:
+- **Which tool or interface** — e.g. "in the Claude Code terminal", "in claude.ai/design", "in the Claude app CoWork tab"
+- **Which terminal or shell** — e.g. "open a new terminal in VS Code", "in the same Claude Code session terminal"
+- **Exact file paths** — never just "the settings file"; always `/full/path/to/file`
+- **Exact commands to run** — copy-pasteable, no ambiguity
+
+Bad: "update the config file and run the install command"
+Good: "Edit `~/.claude/settings.json`, then run `npm install` in the Claude Code terminal at `/home/user/builtbyvega`"
+
+### Preview vs. write vs. commit are three separate steps
+
+- **Preview** = show the content inline in the response. Do not write to disk.
+- **Write** = create or edit files on disk. Only after Daniel says "looks good", "go ahead", or similar approval.
+- **Commit** = stage and commit. Only after all files for the change are written and Daniel has seen them.
+
+When showing a draft for review, end with: *"Ready to write this? Say 'go ahead' or tell me what to change."*
+"Looks good" counts as approval to write and commit.
+
+### Batch related changes
+
+When a task involves multiple files (e.g. a config + a doc + a hook):
+1. Write all files to disk first
+2. Show a summary of what was written
+3. Commit everything together in one commit — don't commit partial sets
+
+### Ask before searching blindly
+
+If Daniel says something is incomplete or missing and you've already done a thorough search, don't chain more tool calls assuming docs exist. Ask:
+*"I searched X, Y, Z and found [summary]. What specifically is missing — I'll look for it directly."*
+
+Let Daniel steer the search rather than exhausting every possible location speculatively.
