@@ -10,6 +10,25 @@
                     }
                 ]
             }
+        ],
+        "PostToolUse": [
+            {
+                "matcher": "Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "jq -r '.tool_input.file_path // empty' | { read -r f && prettier --write \"$f\"; } 2>/dev/null || true"
+                    },
+                    {
+                        "type": "command",
+                        "command": "jq -r '.tool_input.file_path // empty' | { read -r f && eslint --fix \"$f\"; } 2>/dev/null || true"
+                    },
+                    {
+                        "type": "command",
+                        "command": "tsc --noEmit 2>/dev/null || true"
+                    }
+                ]
+            }
         ]
     },
     "permissions": {
