@@ -3,6 +3,7 @@
 "Ideas, activated." — a portfolio and brand-building site for Daniel Vega, demonstrating his ability to leverage AI to take a product, service, or idea and deliver it as a fully formed brand — complete with marketing strategy and campaign recommendations.
 
 The site serves two audiences:
+
 1. **Public** — hiring managers, recruiters, and consulting clients who want to see Daniel's AI-powered brand-building capabilities in action, delivered through **V**, his dedicated AI agent.
 2. **Private** (to be built) — a personal hub for Daniel's passion projects: fantasy baseball, his wellness plan, his son's game builds, and others.
 
@@ -39,6 +40,7 @@ npx wrangler versions upload # non-production / preview
 ```
 
 Config lives in `wrangler.jsonc` (pending merge via PR #1). Key settings:
+
 - `compatibility_date: 2026-04-21`
 - `nodejs_compat` flag enabled
 - Observability enabled
@@ -50,27 +52,50 @@ Cloudflare bindings (KV, D1, R2) are available but not yet configured.
 
 Permanently configured in `~/.claude.json` (project scope):
 
-| MCP | Purpose |
-|---|---|
-| **Cloudflare** (`mcp.cloudflare.com`) | Manage Workers, KV, D1, R2, Pages, and Wrangler directly from Claude Code. First use requires OAuth to authorize your Cloudflare account. Works best from project root where `wrangler.jsonc` lives. |
-| **GitHub** (`api.githubcopilot.com/mcp/`) | Read/write issues, PRs, branches, and files. Used in every session — permanently configured so it's available outside CCR environments too. |
+| MCP                                       | Purpose                                                                                                                                                                                              |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Cloudflare** (`mcp.cloudflare.com`)     | Manage Workers, KV, D1, R2, Pages, and Wrangler directly from Claude Code. First use requires OAuth to authorize your Cloudflare account. Works best from project root where `wrangler.jsonc` lives. |
+| **GitHub** (`api.githubcopilot.com/mcp/`) | Read/write issues, PRs, branches, and files. Used in every session — permanently configured so it's available outside CCR environments too.                                                          |
 
 **Memory MCP**: Hold off until V development begins and there's sufficient cross-session context worth persisting.
 
-## Session Start Hook
+## Hooks
 
-`.claude/hooks/session-start.sh` runs at the start of every remote session and outputs:
+Three hooks are configured in `.claude/settings.json`.
+
+**SessionStart** — `.claude/hooks/session-start.sh` runs synchronously at session start:
+
 - Current git branch
 - Uncommitted/untracked file warnings
 - Unpushed commit count
 - Wrangler availability check
 
-Running synchronously — session waits for it to complete before starting (guarantees clean state check before any work begins).
+**Stop** — `~/.claude/stop-hook-git-check.sh` blocks session exit if there are uncommitted changes. Always commit and push before ending a session.
+
+**PostToolUse (Edit|Write)** — Three formatters run automatically after every file write:
+
+- `prettier --write` — reformats the file in place (confirmed working on `index.html`)
+- `eslint --fix` — silent for now (no `eslint.config.js` yet)
+- `tsc --noEmit` — silent for now (no `tsconfig.json` yet)
+
+Prettier is the canonical formatter for this project — do not manually reformat files.
 
 ## Open PRs to be aware of
 
 - **PR #1** — Cloudflare Workers autoconfig (`cloudflare/workers-autoconfig`) — not yet merged
 - **PR #2** — Claude Code settings (`claude/add-context-mode-plugin-eWyVo`) — not yet merged
+
+## Agent Teams
+
+Enabled via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in `.claude/settings.json`.
+
+Allows spawning multiple coordinated Claude sessions in parallel — one lead directing several teammates on independent subtasks. Best for parallel research, reviewing separate concerns, or tackling independent features simultaneously. Avoid when tasks share files or depend on each other.
+
+To launch, just ask in plain language: _"Create a team of three agents to review X, Y, and Z."_
+
+- **Shift+Down** — cycle through active teammates
+- **Ctrl+T** — toggle shared task list
+- Experimental: uses more tokens, no session resumption for in-process teammates
 
 ## Branch conventions
 
@@ -90,42 +115,42 @@ Claude should proactively recommend the right model, tool, or skill for each tas
 
 ### Model selection
 
-| Task type | Model |
-|---|---|
-| Quick lookups, summarization, simple edits, one-liners | Haiku 4.5 |
-| Most coding tasks, feature work, debugging, PRs, research | Sonnet 4.6 (default) |
-| Architecture decisions, complex reasoning, brand/strategy work, anything involving V's output quality | Opus 4.7 |
+| Task type                                                                                             | Model                |
+| ----------------------------------------------------------------------------------------------------- | -------------------- |
+| Quick lookups, summarization, simple edits, one-liners                                                | Haiku 4.5            |
+| Most coding tasks, feature work, debugging, PRs, research                                             | Sonnet 4.6 (default) |
+| Architecture decisions, complex reasoning, brand/strategy work, anything involving V's output quality | Opus 4.7             |
 
-If a task clearly warrants a different model than the one currently running, say so at the start of the response: *"This would be better handled by Opus — consider switching with /model."*
+If a task clearly warrants a different model than the one currently running, say so at the start of the response: _"This would be better handled by Opus — consider switching with /model."_
 
 ### Tool / interface selection
 
-| Situation | Recommended tool |
-|---|---|
-| Writing, editing, or running code; git operations; file changes | **Claude Code** (CLI / IDE extension) |
-| Brainstorming, copy, strategy, brand voice, V prompt design, long-form thinking | **Claude.ai chat** |
-| Visual work — UI mockups, layouts, logos, brand assets, design iterations | **Claude Design** (claude.ai/design) |
-| Real-time pairing, collaborative back-and-forth on a task | **CoWork** (within Claude app) |
+| Situation                                                                                                                   | Recommended tool                                                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Writing, editing, or running code; git operations; file changes                                                             | **Claude Code** (CLI / IDE extension)                                                                                                                                                    |
+| Brainstorming, copy, strategy, brand voice, V prompt design, long-form thinking                                             | **Claude.ai chat**                                                                                                                                                                       |
+| Visual work — UI mockups, layouts, logos, brand assets, design iterations                                                   | **Claude Design** (claude.ai/design)                                                                                                                                                     |
+| Real-time pairing, collaborative back-and-forth on a task                                                                   | **CoWork** (within Claude app)                                                                                                                                                           |
 | Autonomous agent tasks; connecting messaging platforms (Slack, Discord, etc.) to Claude; running skills outside Claude Code | **OpenClaw** (openclaw.ai) — runs locally, own CLI and skills system. Note: Claude Pro/Max subscription usage cannot be piped through OpenClaw as of April 2026; use a separate API key. |
 
 If the task is clearly better suited to a different interface, say so upfront rather than attempting it in the wrong context.
 
 ### Skill selection (Claude Code)
 
-| Situation | Skill |
-|---|---|
-| Starting work in a new or unfamiliar repo | `/init` |
-| Code changes feel sprawling or over-engineered | `/simplify` |
-| Pre-merge check on a feature branch | `/review` |
-| Any auth, data handling, or API surface changes | `/security-review` |
-| Permission prompts are getting repetitive | `/fewer-permission-prompts` |
-| Need a recurring or automated task | `/loop` |
-| New page, hi-fi mockup, prototype, animation, brand design | `/huashu-design` |
-| Polish existing UI (typeset, animate, colorize, layout) | `/impeccable` |
-| Frontend looks generic or AI-ish | `/taste` |
-| Need a UI style, color palette, or font pairing | `/ui-ux-pro-max` |
-| Write or run Playwright browser tests | `/playwright` |
-| Visual QA before deploying | `/design-review` |
+| Situation                                                  | Skill                       |
+| ---------------------------------------------------------- | --------------------------- |
+| Starting work in a new or unfamiliar repo                  | `/init`                     |
+| Code changes feel sprawling or over-engineered             | `/simplify`                 |
+| Pre-merge check on a feature branch                        | `/review`                   |
+| Any auth, data handling, or API surface changes            | `/security-review`          |
+| Permission prompts are getting repetitive                  | `/fewer-permission-prompts` |
+| Need a recurring or automated task                         | `/loop`                     |
+| New page, hi-fi mockup, prototype, animation, brand design | `/huashu-design`            |
+| Polish existing UI (typeset, animate, colorize, layout)    | `/impeccable`               |
+| Frontend looks generic or AI-ish                           | `/taste`                    |
+| Need a UI style, color palette, or font pairing            | `/ui-ux-pro-max`            |
+| Write or run Playwright browser tests                      | `/playwright`               |
+| Visual QA before deploying                                 | `/design-review`            |
 
 ### Communication style
 
@@ -134,7 +159,7 @@ Daniel is a non-coder learning on the fly. Every response should reflect that:
 - **Default to plain language.** Write like you're explaining to a smart friend who doesn't code, not a developer.
 - **Always define technical terms** the first time they appear in a response. Put the definition in plain English immediately after the term — don't assume prior knowledge. Example: "a `branch` (a separate copy of the project you can edit without affecting the main version)."
 - **Never assume familiarity** with terminal commands, git concepts, config file syntax, or developer tooling.
-- **When giving instructions**, say *what to do*, *where to do it*, and *why it matters* — all three.
+- **When giving instructions**, say _what to do_, _where to do it_, and _why it matters_ — all three.
 - **If a simpler word exists, use it.** "Save and publish" instead of "commit and push." "Settings file" with the path, not just "config."
 
 ### General principles
@@ -150,6 +175,7 @@ Daniel is a non-coder learning on the fly. Every response should reflect that:
 ### Always be specific with directions
 
 When giving instructions involving tools, terminals, or file locations, always specify exactly:
+
 - **Which tool or interface** — e.g. "in the Claude Code terminal", "in claude.ai/design", "in the Claude app CoWork tab"
 - **Which terminal or shell** — e.g. "open a new terminal in VS Code", "in the same Claude Code session terminal"
 - **Exact file paths** — never just "the settings file"; always `/full/path/to/file`
@@ -164,12 +190,13 @@ Good: "Edit `~/.claude/settings.json`, then run `npm install` in the Claude Code
 - **Write** = create or edit files on disk. Only after Daniel says "looks good", "go ahead", or similar approval.
 - **Commit** = stage and commit. Only after all files for the change are written and Daniel has seen them.
 
-When showing a draft for review, end with: *"Ready to write this? Say 'go ahead' or tell me what to change."*
+When showing a draft for review, end with: _"Ready to write this? Say 'go ahead' or tell me what to change."_
 "Looks good" counts as approval to write and commit.
 
 ### Batch related changes
 
 When a task involves multiple files (e.g. a config + a doc + a hook):
+
 1. Write all files to disk first
 2. Show a summary of what was written
 3. Commit everything together in one commit — don't commit partial sets
@@ -177,7 +204,7 @@ When a task involves multiple files (e.g. a config + a doc + a hook):
 ### Ask before searching blindly
 
 If Daniel says something is incomplete or missing and you've already done a thorough search, don't chain more tool calls assuming docs exist. Ask:
-*"I searched X, Y, Z and found [summary]. What specifically is missing — I'll look for it directly."*
+_"I searched X, Y, Z and found [summary]. What specifically is missing — I'll look for it directly."_
 
 Let Daniel steer the search rather than exhausting every possible location speculatively.
 
