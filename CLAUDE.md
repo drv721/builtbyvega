@@ -97,6 +97,9 @@ All file routing follows `FILING.md` in this repo. Quick rules:
 | Job Search / DV Resume | `Job Search/` |
 | Fantasy Baseball | `Deez/` (EYJ files → `Deez/EYJ/`) |
 | Wellness / Training | `DV/` |
+| Learning & courses | `Learning/` |
+
+**Dan's Playbook** lives at `iCloud/Learning/Dan's Playbook/` — a living document updated regularly. When asked to update the playbook, always write to that location.
 
 When saving or referencing a file, always check `FILING.md` for the correct destination before asking Daniel where it goes.
 

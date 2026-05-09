@@ -16,6 +16,7 @@
 | Fantasy Baseball | `Deez/` | — |
 | Wellness / Training | `DV/` | — |
 | Son's Games | `Sons-Games/` (create when active) | TBD |
+| Learning & courses | `Learning/` | — |
 
 ---
 
@@ -32,6 +33,8 @@
 | Fantasy baseball tools, ADP files, calculators | `iCloud/Deez/` |
 | EYJ-specific files | `iCloud/Deez/EYJ/` |
 | Training plans, CT & IT docs | `iCloud/DV/` |
+| Courses and learning content | `iCloud/Learning/` |
+| Dan's Playbook (living doc) | `iCloud/Learning/Dan's Playbook/` |
 
 ---
 
