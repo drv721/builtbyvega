@@ -84,6 +84,22 @@ Always develop on the designated branch and push before ending a session.
 - Do not touch `wrangler.jsonc` without confirming deployment impact
 - The private section (passion projects) is a future workstream — do not conflate it with the public portfolio/brand work
 
+## Filing System
+
+All file routing follows `FILING.md` in this repo. Quick rules:
+
+- **Code** → GitHub (`github.com/drv721`), never iCloud
+- **Everything else** → iCloud Drive, organized by project:
+
+| Project | iCloud Folder |
+|---------|--------------|
+| Built by Vega | `BbV/` |
+| Job Search / DV Resume | `Job Search/` |
+| Fantasy Baseball | `Deez/` (EYJ files → `Deez/EYJ/`) |
+| Wellness / Training | `DV/` |
+
+When saving or referencing a file, always check `FILING.md` for the correct destination before asking Daniel where it goes.
+
 ## Rules of Engagement
 
 Claude should proactively recommend the right model, tool, or skill for each task without waiting to be asked. Use this as a decision guide.
