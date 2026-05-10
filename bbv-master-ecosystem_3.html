@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Built by Vega — Master Ecosystem Plan v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#002D72;--orange:#FF5910;--dark:#001a45;--mid:#002255;
+  --white:#fff;--muted:#94a3b8;--border:rgba(255,255,255,0.08);
+  --cbg:rgba(255,255,255,0.04);--green:#22c55e;--yellow:#f59e0b;
+  --purple:#a855f7;--cyan:#06b6d4;--red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;font-weight:300;}
+header{background:rgba(0,18,45,0.96);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:.1em;}
+.logo span{color:var(--orange);}
+.nav-tabs{display:flex;gap:.12rem;flex-wrap:wrap;}
+.nav-tab{font-size:.65rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.32rem .6rem;border-radius:5px;cursor:pointer;border:none;background:transparent;transition:all .15s;font-family:'Inter',sans-serif;}
+.nav-tab:hover{color:var(--white);background:var(--cbg);}
+.nav-tab.active{color:var(--orange);background:rgba(255,89,16,.1);}
+.htag{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);}
+.htag em{color:var(--green);font-style:normal;}
+.panel{display:none;padding:1.5rem;max-width:1440px;margin:0 auto;}
+.panel.active{display:block;animation:fu .25s ease;}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sec-lbl{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem;}
+.sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.45rem;margin-bottom:1.2rem;}
+.sub{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:.55rem;margin-top:1rem;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;}
+.card{background:var(--cbg);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;color:var(--white);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.card-body{font-size:.73rem;color:#cbd5e1;line-height:1.65;}
+.badge{display:inline-flex;align-items:center;gap:.22rem;font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:500;letter-spacing:.05em;padding:.16rem .42rem;border-radius:3px;text-transform:uppercase;}
+.bl{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.bb{background:rgba(255,89,16,.12);color:var(--orange);border:1px solid rgba(255,89,16,.25);}
+.br{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25);}
+.bp{background:rgba(148,163,184,.08);color:var(--muted);border:1px solid rgba(148,163,184,.15);}
+.bc{background:rgba(6,182,212,.12);color:var(--cyan);border:1px solid rgba(6,182,212,.25);}
+.by2{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.2);}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.pw{margin-top:.6rem;}
+.pl{display:flex;justify-content:space-between;font-size:.63rem;color:var(--muted);margin-bottom:.28rem;}
+.pt{height:3px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;}
+.pf{height:100%;border-radius:99px;background:var(--orange);}
+/* project cards */
+.pc{background:var(--cbg);border:1px solid var(--border);border-radius:13px;padding:1.2rem;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.pc:hover{border-color:rgba(255,89,16,.4);transform:translateY(-2px);}
+.pc .oh{position:absolute;bottom:.85rem;right:.9rem;font-size:.58rem;font-family:'JetBrains Mono',monospace;color:var(--muted);opacity:0;transition:opacity .18s;}
+.pc:hover .oh{opacity:1;}
+.pc .al{position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--orange));opacity:0;transition:opacity .18s;}
+.pc:hover .al{opacity:1;}
+.pn{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:.18rem;}
+.pt2{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);margin-bottom:.55rem;}
+.pd{font-size:.7rem;color:#94a3b8;line-height:1.52;margin-bottom:.6rem;}
+/* detail */
+.dv{display:none;margin-top:1.4rem;}
+.dv.active{display:block;animation:fu .2s ease;}
+.dh{display:flex;align-items:center;gap:.9rem;margin-bottom:1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.bb2{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);cursor:pointer;border:1px solid var(--border);background:transparent;padding:.32rem .65rem;border-radius:5px;transition:all .15s;white-space:nowrap;}
+.bb2:hover{color:var(--white);border-color:rgba(255,255,255,.2);}
+.dt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;}
+.dtabs{display:flex;gap:.22rem;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:.45rem;flex-wrap:wrap;}
+.dtab{font-size:.68rem;font-weight:500;color:var(--muted);padding:.28rem .65rem;border-radius:5px;cursor:pointer;border:none;background:transparent;transition:all .15s;font-family:'Inter',sans-serif;}
+.dtab:hover{color:var(--white);}
+.dtab.active{color:var(--orange);background:rgba(255,89,16,.08);}
+.dp{display:none;}
+.dp.active{display:block;animation:fu .2s ease;}
+/* milestones */
+.ms{display:flex;align-items:flex-start;gap:.6rem;padding:.48rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.73rem;}
+.ms:last-child{border-bottom:none;}
+.mi{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.58rem;flex-shrink:0;margin-top:1px;}
+.mi.done{background:rgba(34,197,94,.18);color:var(--green);}
+.mi.wip{background:rgba(255,89,16,.18);color:var(--orange);}
+.mi.todo{background:rgba(148,163,184,.1);color:var(--muted);}
+.mt{color:#cbd5e1;}
+.mt strong{color:var(--white);font-weight:500;display:block;margin-bottom:.08rem;}
+.mm{font-size:.6rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+/* tasks */
+.task{display:flex;align-items:flex-start;gap:.6rem;padding:.48rem .6rem;border-radius:7px;cursor:pointer;transition:background .12s;font-size:.73rem;color:#cbd5e1;}
+.task:hover{background:rgba(255,255,255,.03);}
+.task.checked{color:var(--muted);}
+.task.checked .tb strong{text-decoration:line-through;color:var(--muted);}
+.tcb{width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.52rem;margin-top:2px;transition:all .12s;}
+.task.checked .tcb{background:var(--green);border-color:var(--green);color:#fff;}
+.tb{flex:1;}
+.tb strong{color:var(--white);font-weight:500;display:block;font-size:.73rem;margin-bottom:.08rem;}
+.tb span{font-size:.61rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.pri{font-size:.56rem;font-family:'JetBrains Mono',monospace;margin-left:auto;flex-shrink:0;padding-top:3px;}
+/* sprint */
+.sp{border-left:2px solid var(--orange);padding-left:.8rem;margin-bottom:.9rem;}
+.sp.c{border-color:var(--cyan);}
+.sp.g{border-color:var(--green);}
+.sp.p{border-color:var(--purple);}
+.sp.y{border-color:var(--yellow);}
+.sp.m{border-color:var(--muted);}
+.spt{font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;color:var(--white);margin-bottom:.3rem;}
+.spb{font-size:.7rem;color:#94a3b8;line-height:1.68;}
+.spb ul{padding-left:.9rem;}
+.spb li{margin-bottom:.12rem;}
+/* nlm */
+.nlm{background:rgba(6,182,212,.04);border:1px solid rgba(6,182,212,.18);border-radius:8px;padding:.75rem;margin-bottom:.55rem;}
+.nlm-l{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;}
+.nlm-q{font-size:.72rem;color:var(--white);font-weight:500;margin-bottom:.15rem;line-height:1.45;}
+/* route chips */
+.rc{display:inline-flex;align-items:center;gap:.25rem;font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:.16rem .42rem;border-radius:4px;margin-right:.28rem;margin-bottom:.28rem;}
+.rch{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.2);}
+.rcs{background:rgba(255,89,16,.1);color:var(--orange);border:1px solid rgba(255,89,16,.2);}
+.rcc{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.rcn{background:rgba(148,163,184,.08);color:var(--muted);border:1px solid rgba(148,163,184,.15);}
+/* alert */
+.al2{border-radius:8px;padding:.62rem .78rem;font-size:.7rem;line-height:1.55;margin-bottom:.55rem;}
+.al2.o{background:rgba(255,89,16,.06);border:1px solid rgba(255,89,16,.2);color:#fdba74;}
+.al2.c{background:rgba(6,182,212,.05);border:1px solid rgba(6,182,212,.18);color:#67e8f9;}
+.al2.y{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.18);color:#fcd34d;}
+.al2.r{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.18);color:#fca5a5;}
+.al2.g2{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.18);color:#86efac;}
+.al2 strong{font-weight:600;}
+/* timeline */
+.tl{position:relative;padding-left:1.15rem;}
+.tl::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:1px;background:var(--border);}
+.tli{position:relative;margin-bottom:.85rem;}
+.tld{position:absolute;left:-1.15rem;top:.15rem;width:10px;height:10px;border-radius:50%;border:2px solid var(--border);background:var(--dark);}
+.tld.done{border-color:var(--green);background:rgba(34,197,94,.2);}
+.tld.active{border-color:var(--orange);background:rgba(255,89,16,.2);}
+.tlt{font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;color:var(--white);margin-bottom:.14rem;}
+.tlb{font-size:.68rem;color:#94a3b8;line-height:1.48;}
+/* misc */
+.hr{height:1px;background:var(--border);margin:.85rem 0;}
+.metric{background:var(--cbg);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;}
+.mv{font-family:'Syne',sans-serif;font-weight:800;font-size:1.75rem;color:var(--orange);}
+.ml{font-size:.6rem;color:var(--muted);margin-top:.18rem;text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;}
+.ms2{font-size:.6rem;color:#64748b;margin-top:.18rem;}
+.tbl{width:100%;border-collapse:collapse;font-size:.7rem;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:.38rem .62rem;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:.5rem .62rem;border-bottom:1px solid rgba(255,255,255,.03);color:#cbd5e1;vertical-align:top;}
+.mono{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--cyan);}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:99px;}
+@media(max-width:768px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}.nav-tabs{display:none}.panel{padding:1rem}}
+/* section headers inside panels */
+.section-hdr{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--orange);padding:.5rem 0;margin-top:1.5rem;margin-bottom:.75rem;border-bottom:1px solid rgba(255,89,16,.15);letter-spacing:.02em;}
+.section-hdr:first-child{margin-top:0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BUILT BY <span>VEGA</span> <span style="color:rgba(255,255,255,.25);font-weight:300;font-size:.7rem;letter-spacing:.05em;margin-left:.5rem;font-family:'Inter',sans-serif">· Runs by V.</span></div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPanel('overview',this)">Overview</button>
+    <button class="nav-tab" onclick="showPanel('research',this)">Research</button>
+    <button class="nav-tab" onclick="showPanel('roadmap',this)">Roadmap</button>
+    <button class="nav-tab" onclick="showPanel('ops',this)">BbV Ops</button>
+    <button class="nav-tab" onclick="showPanel('revenue',this)">Revenue</button>
+    <button class="nav-tab" onclick="showPanel('infra',this)">Infra</button>
+    <button class="nav-tab" onclick="showPanel('milestones',this)">Milestones</button>
+    <button class="nav-tab" onclick="showPanel('tasks',this)">Tasks</button>
+    <button class="nav-tab" onclick="showPanel('priority',this);renderPriority()">Priority Queue</button>
+  </nav>
+  <div class="htag">v3.0 · May 2026 · <em>● ACTIVE</em></div>
+</header>
+
+<!-- ═══════════ OVERVIEW ═══════════ -->
+<div id="overview" class="panel active">
+
+  <div class="g5" style="margin-bottom:1.2rem">
+    <div class="metric"><div class="mv">8</div><div class="ml">Total Projects</div></div>
+    <div class="metric"><div class="mv">3</div><div class="ml">Live</div></div>
+    <div class="metric"><div class="mv">3</div><div class="ml">Research Sprints</div><div class="ms2">P1/P2/P3 queued</div></div>
+    <div class="metric"><div class="mv">$1.5K</div><div class="ml">First Rev Target</div></div>
+    <div class="metric"><div class="mv">Q3</div><div class="ml">Revenue Timeline</div><div class="ms2">2026</div></div>
+  </div>
+
+  <div class="sec-lbl" style="margin-bottom:.5rem">Click any card to open full detail · Research P1 = start here</div>
+
+  <!-- ── CORE BUILDS ── -->
+  <div class="section-hdr">Core Builds</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:.5rem" id="proj-grid-core">
+
+    <div class="pc" style="--accent:var(--cyan)" onclick="openProject('v')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">🎙️</div>
+      <div class="pn">V — Voice Assistant</div>
+      <div class="pt2">github.com/drv721/openclaw</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bb"><span class="dot"></span>Building</span><span class="badge br">Research P2</span></div>
+      <div class="pd">Claude Haiku + Deepgram STT + gTTS. The force multiplier — once fully built, everything else moves faster. Test on Southside → prep TCS + LBI.</div>
+      <div class="pw"><div class="pl"><span>Core build</span><span>65%</span></div><div class="pt"><div class="pf" style="width:65%;background:var(--cyan)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--orange)" onclick="openProject('bbv')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">🌐</div>
+      <div class="pn">builtbyvega.com</div>
+      <div class="pt2">github.com/drv721/builtbyvega</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bl"><span class="dot"></span>Live</span><span class="badge bb" style="background:rgba(255,89,16,.12);color:var(--orange);border-color:rgba(255,89,16,.25)">Research P1 ← Start</span></div>
+      <div class="pd">AI consulting brand hub. Coming soon page live. Claude Code infra complete (CLAUDE.md · MCPs · hooks · plugins). Research sprint is Priority 1 — informs site copy, TCS pitch, LBI pitch, and all pricing before build.</div>
+      <div class="pw"><div class="pl"><span>Site build</span><span>30%</span></div><div class="pt"><div class="pf" style="width:30%"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--green)" onclick="openProject('finance')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">💳</div>
+      <div class="pn">Finance App</div>
+      <div class="pt2">Privacy-first financial literacy</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge br"><span class="dot"></span>Sprint Active</span></div>
+      <div class="pd">Rewards optimization + financial literacy platform. Ad/partnership revenue model. Research sprint active in separate thread — primary long-term revenue engine.</div>
+      <div class="pw"><div class="pl"><span>Research</span><span>40%</span></div><div class="pt"><div class="pf" style="width:40%;background:var(--green)"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ── CLIENT PROJECTS ── -->
+  <div class="section-hdr">Client Projects</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:.5rem" id="proj-grid-client">
+
+    <div class="pc" style="--accent:var(--yellow)" onclick="openProject('lbi')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">🏙️</div>
+      <div class="pn">LBI — Website Refresh</div>
+      <div class="pt2">Client project · post-V</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bp">Planned</span><span class="badge by2">Post-V</span></div>
+      <div class="pd">First real client project after V is proven. Website refresh + bookstore. 2–3 week build. V handles campaign gen, monitoring, KPI tracking.</div>
+      <div class="pw"><div class="pl"><span>Scoped</span><span>0%</span></div><div class="pt"><div class="pf" style="width:0%;background:var(--yellow)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--purple)" onclick="openProject('sd')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">⚾</div>
+      <div class="pn">Southside Drops</div>
+      <div class="pt2">drv721.github.io/murakami</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bl"><span class="dot"></span>Live</span><span class="badge bb">Designing</span><span class="badge br">Research P3</span></div>
+      <div class="pd">Streetwear brand sandbox. Murakami/White Sox. 5 concept lines. V monitoring POC. Test V here first before pitching TCS + LBI.</div>
+      <div class="pw"><div class="pl"><span>Design phase</span><span>70%</span></div><div class="pt"><div class="pf" style="width:70%;background:var(--purple)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--muted)" onclick="openProject('jobs')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">💼</div>
+      <div class="pn">Job Search HQ</div>
+      <div class="pt2">linkedin.com/in/drv1/ · Parallel track</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bb"><span class="dot"></span>Active · 3 in pipeline</span></div>
+      <div class="pd">TAG/Motto HM interview pending · Netflix referral · JPMorgan warm contact. BbV builds strengthen candidacy. Parallel to everything else.</div>
+      <div class="pw"><div class="pl"><span>Pipeline</span><span>3 active</span></div><div class="pt"><div class="pf" style="width:50%;background:var(--muted)"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ── PERSONAL / SANDBOX ── -->
+  <div class="section-hdr">Personal & Sandbox Projects</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-bottom:1rem" id="proj-grid-personal">
+
+    <div class="pc" style="--accent:var(--cyan)" onclick="openProject('horror')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">👾</div>
+      <div class="pn">Asymmetrical Horror Game</div>
+      <div class="pt2">Roblox · Kid-friendly · Son project</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bp">Phase 3</span></div>
+      <div class="pd">Father-son vibe coding project. Claude writes Luau code. Son is creative director. Asymmetrical horror, kid-friendly. Rebirth AI plugin for Studio.</div>
+      <div class="pw"><div class="pl"><span>Planned</span><span>0%</span></div><div class="pt"><div class="pf" style="width:0%;background:var(--cyan)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--green)" onclick="openProject('myplan')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">📋</div>
+      <div class="pn">My Plan App</div>
+      <div class="pt2">drv721.github.io/claude-apps/</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bl"><span class="dot"></span>Live</span></div>
+      <div class="pd">Meal planning + workout + habits + weight tracking. Mets palette. Portfolio POC for rapid AI-assisted builds.</div>
+      <div class="pw"><div class="pl"><span>Feature complete</span><span>85%</span></div><div class="pt"><div class="pf" style="width:85%;background:var(--green)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--orange)" onclick="openProject('datenight')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">🌆</div>
+      <div class="pn">Date Night HQ</div>
+      <div class="pt2">Personal app · like My Plan</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bp">Planned</span></div>
+      <div class="pd">Personal app for planning date nights. Recommendations, saved spots, ideas, occasion tracker. Single-file HTML PWA like My Plan.</div>
+      <div class="pw"><div class="pl"><span>Planned</span><span>0%</span></div><div class="pt"><div class="pf" style="width:0%;background:var(--orange)"></div></div></div>
+    </div>
+
+    <div class="pc" style="--accent:var(--purple)" onclick="openProject('neuday')">
+      <div class="al"></div><div class="oh">Open →</div>
+      <div style="font-size:1.2rem;margin-bottom:.45rem">🧘</div>
+      <div class="pn">Neuday / Personal Health Plan</div>
+      <div class="pt2">neuday.io reference · copy + UX</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.55rem"><span class="badge bp">Planned</span></div>
+      <div class="pd">Use Neuday ($9.99/mo) as UI/feature reference for personal health plan copy and onboarding survey. Could expand My Plan or become standalone.</div>
+      <div class="pw"><div class="pl"><span>Planned</span><span>0%</span></div><div class="pt"><div class="pf" style="width:0%;background:var(--purple)"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ DETAIL VIEWS ═══ -->
+
+  <!-- V -->
+  <div id="detail-v" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Voice Assistant · openclaw</div><div class="dt">🎙️ V — Voice Assistant</div></div><div style="display:flex;gap:.35rem;margin-left:auto;flex-wrap:wrap"><span class="badge bb"><span class="dot"></span>Building</span><span class="badge br">Research P2</span></div></div>
+    <div class="dtabs"><button class="dtab active" onclick="dTab('v','ov',this)">Overview</button><button class="dtab" onclick="dTab('v','rs',this)">Research Sprint</button><button class="dtab" onclick="dTab('v','bm',this)">Build Milestones</button><button class="dtab" onclick="dTab('v','tk',this)">Tasks</button></div>
+    <div id="v-ov" class="dp active"><div class="g2">
+      <div class="card"><div class="card-title">What V is</div><div class="card-body">Personal AI voice assistant built in Python. Claude Haiku for real-time voice, Deepgram STT SDK v6.1.1, gTTS + pygame audio output. Flat memory.json. Auto session summarization via Sonnet. Mac Mini + MacBook Air via iCloud sync.<br><br><strong style="color:var(--white)">V is the force multiplier.</strong> Once fully built: test on Southside Drops → prepare TCS pitch → prepare LBI pitch. Everything downstream moves faster with V.<br><br><strong style="color:var(--white)">Tagline:</strong> "Built by Vega. Runs by V."</div><div class="hr"></div><div><span class="rc rch">Haiku · voice</span><span class="rc rcs">Sonnet · summarization</span><span class="rc rcc">Code · builds</span></div></div>
+      <div class="card"><div class="card-title">Build Roadmap</div><div class="tl">
+        <div class="tli"><div class="tld done"></div><div class="tlt">Core build complete</div><div class="tlb">Claude API + Deepgram + gTTS + pygame + memory.json + session summarization ✓</div></div>
+        <div class="tli"><div class="tld active"></div><div class="tlt">gstack slash commands</div><div class="tlb">CEO / eng / QA review commands for Claude Code</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Research sprint (P2)</div><div class="tlb">After BbV consulting sprint. Gates TCS + LBI pitch.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Clicky — visual layer</div><div class="tlb">clicky.so · screen-aware voice AI</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">remindctl + Apple Reminders</div><div class="tlb">V connects to native Reminders</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Master workflow skill</div><div class="tlb">Superpowers + gstack + Claude Code in one command</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">V pilot — $50–100 Meta spend</div><div class="tlb">Prove Southside monitoring concept. Gate for TCS outreach.</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Obsidian KB (Phase 3)</div><div class="tlb">Replaces memory.json · rich persistent context</div></div>
+      </div></div>
+    </div></div>
+    <div id="v-rs" class="dp"><div class="al2 o"><strong>Priority 2.</strong> Run after BbV consulting sprint. Required before TCS + LBI client pitches.</div><div class="g2">
+      <div><div class="sub" style="margin-top:0">Phase 1 — NotebookLM Prompts</div>
+        <div class="nlm"><div class="nlm-l">Prompt 1 — Competitive Landscape</div><div class="nlm-q">"What are the main AI voice assistant products targeting professionals or small businesses? Include Lindy, Clicky, ElevenLabs-based products, Rabbit R1. For each: what does it do, who is the target, what does it cost?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 2 — Pricing Models</div><div class="nlm-q">"What pricing models exist for custom AI assistant builds? Compare one-time install, SaaS, usage-based, and retainer. What do custom AI build agencies charge for comparable work?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 3 — ICP Identification</div><div class="nlm-q">"Who is paying for AI voice assistants right now? SMBs, nonprofits, or enterprise? What industries are early adopters? What problems are they solving that ChatGPT alone can't?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 4 — Brand Monitoring Use Case</div><div class="nlm-q">"What tools do small brands and streetwear labels use to monitor brand presence? Pain points with current tools (Brandwatch, Mention, Google Alerts)? Appetite for an AI voice-first brand monitoring assistant?"</div></div>
+      </div>
+      <div><div class="sub" style="margin-top:0">Phase 2 — Synthesis Gate</div>
+        <div class="sp g"><div class="spt">Questions to answer</div><div class="spb"><ul><li>Right price for a custom V install? Validate T1/T2/T3.</li><li>Most winnable first client archetype?</li><li>Non-negotiable features for a paying client?</li><li>Does brand monitoring hold up vs. comp research?</li><li>Product vs. service — install+support vs. SaaS?</li></ul></div></div>
+        <div class="sub">Phase 3 — Outputs</div>
+        <div class="sp p"><div class="spt">Deliverables</div><div class="spb"><ul><li>Updated V pricing with market validation</li><li>V client pitch one-pager (TCS + LBI versions)</li><li>V case study brief for builtbyvega.com</li><li>V MVP feature list: client version vs. personal version</li></ul></div></div>
+      </div>
+    </div></div>
+    <div id="v-bm" class="dp"><div class="g2">
+      <div class="card"><div class="card-title">Completed ✓</div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Claude API + Haiku/Sonnet routing</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Interactive terminal chat</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Persistent memory.json</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Deepgram STT SDK v6.1.1</strong><span class="mm">Keyword-only args · silence detection</span></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>gTTS + pygame voice output</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Auto session summarization</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Mac Mini host + iCloud sync</strong></div></div>
+      </div>
+      <div class="card"><div class="card-title">Remaining</div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>gstack slash commands</strong><span class="mm">Active next step · Claude Code</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Research sprint (P2)</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Clicky visual layer</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>remindctl + Apple Reminders</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Master workflow skill</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V pilot — $50–100 Meta</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Obsidian KB (Phase 3)</strong></div></div>
+      </div>
+    </div></div>
+    <div id="v-tk" class="dp"><div id="dtasks-v"></div></div>
+  </div>
+
+  <!-- BbV SITE -->
+  <div id="detail-bbv" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Consulting Brand · Cloudflare Workers</div><div class="dt">🌐 builtbyvega.com</div></div><div style="display:flex;gap:.35rem;margin-left:auto;flex-wrap:wrap"><span class="badge bl"><span class="dot"></span>Live (30%)</span><span class="badge bb" style="background:rgba(255,89,16,.12);color:var(--orange);border-color:rgba(255,89,16,.25)">Research P1 ← Start Here</span></div></div>
+    <div class="dtabs"><button class="dtab active" onclick="dTab('bbv','ov',this)">Overview</button><button class="dtab" onclick="dTab('bbv','rs',this)">Research Sprint</button><button class="dtab" onclick="dTab('bbv','bm',this)">Build Milestones</button><button class="dtab" onclick="dTab('bbv','tk',this)">Tasks</button></div>
+    <div id="bbv-ov" class="dp active"><div class="g2">
+      <div class="card"><div class="card-title">What it is</div><div class="card-body">The consulting brand hub. Fractional AI CMO practice. Domain live, Cloudflare configured, email routing live (daniel@builtbyvega.com → Gmail), coming soon page deployed.<br><br><strong style="color:var(--white)">Why research is P1:</strong> Site copy, tier pricing, TCS pitch, and LBI pitch all depend on knowing who pays for fractional AI CMO work, what they pay, and how to position. Do not write site copy before this sprint.<br><br><strong style="color:var(--white)">Open questions from previous chat (define first):</strong><br>• Full service vs. just strategy + branding?<br>• SMB needs defined<br>• Nonprofit needs defined</div><div class="hr"></div><div><span class="rc rcn">NotebookLM · research</span><span class="rc rcs">Sonnet · copy</span><span class="rc rcc">Code · site build</span></div></div>
+      <div class="card"><div class="card-title">Site Build Sequence</div><div class="tl">
+        <div class="tli"><div class="tld done"></div><div class="tlt">Domain + DNS + email ✓</div></div>
+        <div class="tli"><div class="tld done"></div><div class="tlt">Coming soon page ✓</div><div class="tlb">Navy/orange · GitHub auto-deploy</div></div>
+        <div class="tli"><div class="tld active"></div><div class="tlt">Research sprint (P1) ← YOU ARE HERE</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Define: full service vs. strategy only</div><div class="tlb">SMB needs · nonprofit needs · service tiers</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Site copy brief → full build</div><div class="tlb">Claude Code · hero · services · case studies · contact · blog</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Website visitor tracker</div><div class="tlb">Add analytics (Plausible or Fathom for privacy-first) to know who's visiting</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Client intake survey live</div><div class="tlb">Embedded on site · feeds V client intake flow</div></div>
+      </div></div>
+    </div></div>
+    <div id="bbv-rs" class="dp"><div class="al2 o"><strong>Priority 1. Run first.</strong> Before any site copy. Before TCS or LBI pitch. Also answers: full service vs. strategy only, SMB vs. nonprofit ICP.</div><div class="g2">
+      <div><div class="sub" style="margin-top:0">Phase 1 — NotebookLM Prompts</div>
+        <div class="nlm"><div class="nlm-l">Prompt 1 — Market & Demand</div><div class="nlm-q">"What is the market for fractional CMO services? What types of companies hire them? What drives the decision vs. full-time or agency? Typical contract lengths and engagement models?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 2 — Full Service vs. Strategy Only</div><div class="nlm-q">"Do fractional CMOs typically offer full campaign execution, or just strategy + branding? What scope of work do clients expect at each tier? What's the operational difference and how does it affect pricing?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 3 — SMB vs. Nonprofit Needs</div><div class="nlm-q">"What are the specific marketing needs of small-to-medium businesses vs. nonprofits when hiring a fractional CMO? How do their goals, budgets, and success metrics differ? What does each segment need most?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 4 — Pricing Benchmarks</div><div class="nlm-q">"What do fractional CMOs charge? Entry-level project ($1,500 flat) through senior retainer ($8–15K/mo). What scope justifies each? How do AI-augmented consultancies price differently?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 5 — Chicago Market</div><div class="nlm-q">"Fractional CMO landscape in Chicago. Dominant industries (nonprofits, tech, CPG, healthcare). Top 5–10 visible players and how they position. Gaps BbV could own."</div></div>
+      </div>
+      <div><div class="sub" style="margin-top:0">Phase 2 — Synthesis Questions</div>
+        <div class="sp g"><div class="spt">Decisions this sprint unlocks</div><div class="spb"><ul><li>Full service vs. strategy + branding only?</li><li>Primary ICP: SMB or nonprofit?</li><li>T1/T2/T3 pricing validated?</li><li>Strongest one-line positioning statement?</li><li>How to frame "AI-augmented" without creating confusion?</li></ul></div></div>
+        <div class="sub">Phase 3 — Outputs</div>
+        <div class="sp p"><div class="spt">Deliverables</div><div class="spb"><ul><li>Service definition: full service vs. strategy only (or tiered)</li><li>SMB service spec + nonprofit service spec</li><li>Updated T1/T2/T3 pricing with market validation</li><li>BbV positioning statement (1 sentence)</li><li>Site copy brief: hero + services section</li><li>TCS + LBI pitch frameworks</li></ul></div></div>
+      </div>
+    </div></div>
+    <div id="bbv-bm" class="dp"><div class="g2">
+      <div class="card"><div class="card-title">Completed ✓</div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Domain · builtbyvega.com</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Cloudflare Pages auto-deploy</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Email routing live</strong><span class="mm">daniel@builtbyvega.com → Gmail</span></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Coming soon page</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>LinkedIn banner</strong><span class="mm">1584×396 · built May 2026</span></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>Claude Code infrastructure</strong><span class="mm">CLAUDE.md · Cloudflare + GitHub MCPs · session-start hook · PreToolUse guard · 5 plugins · permission config · PR #1 + #2 merged → main · May 2026</span></div></div>
+      </div>
+      <div class="card"><div class="card-title">Remaining (gated by research)</div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Research sprint P1</strong><span class="mm">Gate for all below</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Define: full service vs. strategy only</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>SMB + nonprofit service specs</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Full site build</strong><span class="mm">Claude Code</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Website visitor tracker</strong><span class="mm">Plausible or Fathom</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Client intake survey</strong><span class="mm">Embedded · feeds V intake flow</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>TCS outreach</strong><span class="mm">After V pilot + research locked</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>LBI outreach</strong><span class="mm">After V proven on Southside</span></div></div>
+      </div>
+    </div></div>
+    <div id="bbv-tk" class="dp"><div id="dtasks-bbv"></div></div>
+  </div>
+
+  <!-- FINANCE -->
+  <div id="detail-finance" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Primary Revenue Engine</div><div class="dt">💳 Finance App</div></div><div style="margin-left:auto"><span class="badge br"><span class="dot"></span>Sprint Active</span></div></div>
+    <div class="dtabs"><button class="dtab active" onclick="dTab('finance','ov',this)">Overview</button><button class="dtab" onclick="dTab('finance','rs',this)">Research Prompts</button><button class="dtab" onclick="dTab('finance','bm',this)">Build Milestones</button><button class="dtab" onclick="dTab('finance','tk',this)">Tasks</button></div>
+    <div id="finance-ov" class="dp active"><div class="g2">
+      <div class="card"><div class="card-title">What it is</div><div class="card-body">Privacy-first financial literacy + rewards optimization platform. Primary BbV revenue engine via ad/partnership model. Research sprint active in separate chat thread.<br><br><strong style="color:var(--white)">Revenue model:</strong> Credit card affiliate commissions + financial product partnerships + advertising. Highest ceiling of all BbV projects.</div><div class="hr"></div><div><span class="rc rcn">NotebookLM · research</span><span class="rc rcs">Sonnet · synthesis</span><span class="rc rcc">Code · MVP</span></div></div>
+      <div class="card"><div class="card-title">Sprint Status</div><div class="al2 y"><strong>Active in separate thread ~40%.</strong> Do not duplicate here. Return to update milestones as phases complete.</div><div class="tl">
+        <div class="tli"><div class="tld active"></div><div class="tlt">Research sprint active</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Synthesis → brief + feature matrix</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Go/no-go gate</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Spec → openclaw/docs/superpowers/specs/</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">MVP build · Q3–Q4 2026</div></div>
+      </div></div>
+    </div></div>
+    <div id="finance-rs" class="dp">
+      <div class="al2 c"><strong>Reference only.</strong> Sprint is running in separate thread. These prompts are the canonical methodology record.</div>
+      <div class="g2"><div>
+        <div class="nlm"><div class="nlm-l">Prompt 1 — Competitive</div><div class="nlm-q">"NerdWallet, Credit Karma, MaxRewards, AwardWallet, AI entrants. Features, pricing, differentiation, user reviews."</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 2 — Revenue Models</div><div class="nlm-q">"How do financial literacy + rewards apps monetize? Credit card affiliate CPMs, revenue per user benchmarks."</div></div>
+      </div><div>
+        <div class="nlm"><div class="nlm-l">Prompt 3 — Privacy-First Positioning</div><div class="nlm-q">"Is 'privacy-first' a real differentiator in personal finance? Which apps lead? What does it require technically?"</div></div>
+        <div class="nlm"><div class="nlm-l">Prompt 4 — Regulatory</div><div class="nlm-q">"Key regulatory + compliance considerations for credit card affiliate referrals and financial advice."</div></div>
+      </div></div>
+    </div>
+    <div id="finance-bm" class="dp"><div class="card">
+      <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Research sprint (~40%)</strong><span class="mm">Separate thread</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Synthesis + go/no-go gate</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Spec → openclaw/docs/superpowers/specs/</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>MVP build</strong><span class="mm">Claude Code · privacy-first core</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>First ad/partnership revenue</strong><span class="mm">Q3–Q4 2026</span></div></div>
+    </div></div>
+    <div id="finance-tk" class="dp"><div id="dtasks-finance"></div></div>
+  </div>
+
+  <!-- LBI -->
+  <div id="detail-lbi" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Client Project · Post-V</div><div class="dt">🏙️ LBI — Website Refresh + Bookstore</div></div><div style="display:flex;gap:.35rem;margin-left:auto"><span class="badge bp">Planned</span><span class="badge by2">Post-V Gate</span></div></div>
+    <div class="dtabs"><button class="dtab active" onclick="dTab('lbi','ov',this)">Overview</button><button class="dtab" onclick="dTab('lbi','bm',this)">Build Milestones</button><button class="dtab" onclick="dTab('lbi','tk',this)">Tasks</button></div>
+    <div id="lbi-ov" class="dp active"><div class="g2">
+      <div class="card"><div class="card-title">What it is</div><div class="card-body">First real client project after V is proven on Southside Drops. Two scopes:<br><br><strong style="color:var(--white)">Website Refresh:</strong> 2–3 week build. V handles campaign generation, monitoring, KPI tracking, client communication.<br><br><strong style="color:var(--white)">Bookstore:</strong> 1–2 week add-on. Scope depends on inventory, checkout, fulfillment requirements.<br><br><strong style="color:var(--white)">Gate:</strong> Do not approach LBI until V is proven on Southside and BbV consulting research sprint outputs are locked (positioning + pricing).</div><div class="hr"></div><div><span class="rc rcs">Sonnet · strategy</span><span class="rc rcc">Code · build</span><span class="rc rch">V · monitoring + ops</span></div></div>
+      <div class="card"><div class="card-title">Sequencing</div><div class="tl">
+        <div class="tli"><div class="tld"></div><div class="tlt">V proven on Southside Drops</div><div class="tlb">Monitoring demo ready · gate for LBI pitch</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">BbV research sprint (P1) complete</div><div class="tlb">Pricing + positioning locked · LBI pitch framework ready</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">LBI outreach + discovery</div><div class="tlb">Scope website refresh vs. full service vs. strategy only</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Contract + intake survey</div><div class="tlb">BbV Ops infrastructure (see Ops tab)</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Website refresh build</div><div class="tlb">Claude Code · 2–3 weeks</div></div>
+        <div class="tli"><div class="tld"></div><div class="tlt">Bookstore build</div><div class="tlb">1–2 week add-on · scope TBD</div></div>
+      </div></div>
+    </div></div>
+    <div id="lbi-bm" class="dp"><div class="card">
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V proven on Southside</strong><span class="mm">Gate for LBI pitch</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>BbV P1 research sprint complete</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>LBI outreach + discovery call</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Scope: website refresh</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Scope: bookstore (inventory/checkout/fulfillment)</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Contract generated + signed</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Website build</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Bookstore build</strong></div></div>
+    </div></div>
+    <div id="lbi-tk" class="dp"><div id="dtasks-lbi"></div></div>
+  </div>
+
+  <!-- SD -->
+  <div id="detail-sd" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Streetwear Sandbox · V Demo Vehicle</div><div class="dt">⚾ Southside Drops</div></div><div style="display:flex;gap:.35rem;margin-left:auto;flex-wrap:wrap"><span class="badge bl"><span class="dot"></span>Live</span><span class="badge bb">Designing</span><span class="badge br">Research P3</span></div></div>
+    <div class="dtabs"><button class="dtab active" onclick="dTab('sd','ov',this)">Overview</button><button class="dtab" onclick="dTab('sd','rs',this)">Research Sprint</button><button class="dtab" onclick="dTab('sd','bm',this)">Build Milestones</button><button class="dtab" onclick="dTab('sd','tk',this)">Tasks</button></div>
+    <div id="sd-ov" class="dp active"><div class="g2">
+      <div class="card"><div class="card-title">What it is</div><div class="card-body">Streetwear brand concept. Munetaka Murakami / White Sox. 5 lines. Primary purpose: prove V's brand monitoring capability before pitching TCS and LBI.<br><br><strong style="color:var(--white)">Sequencing rule:</strong> Finish design phase → run V pilot here → use results as demo → pitch TCS → pitch LBI.<br><br><strong style="color:var(--white)">5 Lines:</strong> Shogun (flagship — redo needed) · Cherry Blossom Bomber · Murakami the Merciless (T1) · Southside Shinobi (T1) · Nippon to Southside</div><div class="hr"></div><div class="al2 r" style="margin-top:.5rem"><strong>Kanji rule:</strong> Native speaker verification required before any production use. Non-negotiable.</div></div>
+      <div class="card"><div class="card-title">Render Quality</div>
+        <div class="ms"><div class="mi done">T1</div><div class="mt"><strong>Merciless tee + Shinobi snapback</strong><span class="mm">Leonardo/Ideogram v3 · keep as-is</span></div></div>
+        <div class="ms"><div class="mi wip">T2</div><div class="mt"><strong>CBB sukajan + Nippon sling bag</strong><span class="mm">Acceptable · use as-is</span></div></div>
+        <div class="ms"><div class="mi todo">T3</div><div class="mt"><strong>Shogun renders</strong><span class="mm">Must redo · blocking design complete</span></div></div>
+      </div>
+    </div></div>
+    <div id="sd-rs" class="dp"><div class="al2 y"><strong>Priority 3.</strong> After BbV + V sprints and after design phase complete.</div><div class="g2"><div>
+      <div class="nlm"><div class="nlm-l">Prompt 1 — Streetwear Market</div><div class="nlm-q">"Independent streetwear market. Limited drop model, social media, brand narrative role. Most relevant indie brands doing this well."</div></div>
+      <div class="nlm"><div class="nlm-l">Prompt 2 — Japanese-American Crossover</div><div class="nlm-q">"Audience for Japanese-American cultural crossover streetwear. Brands serving this space. Demographic profile + purchasing behavior."</div></div>
+    </div><div>
+      <div class="nlm"><div class="nlm-l">Prompt 3 — AI Brand Monitoring</div><div class="nlm-q">"What tools do small streetwear brands use to monitor mentions and sentiment? Pain points at this scale? What would an AI voice-first monitoring assistant need to do?"</div></div>
+      <div class="nlm"><div class="nlm-l">Prompt 4 — Distribution</div><div class="nlm-q">"Best distribution channels for indie streetwear limited drop: Shopify, NTWRK, StockX, Instagram Shop, pop-ups, boutique consignment. Margin structure at each."</div></div>
+    </div></div></div>
+    <div id="sd-bm" class="dp"><div class="g2">
+      <div class="card"><div class="card-title">Completed ✓</div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>5 concept lines developed</strong></div></div>
+        <div class="ms"><div class="mi done">✓</div><div class="mt"><strong>HTML pitch deck live</strong><span class="mm">drv721.github.io/murakami</span></div></div>
+      </div>
+      <div class="card"><div class="card-title">Remaining</div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Redo Shogun renders</strong><span class="mm">Blocking</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>CTA/Shinkansen tee swap</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Bag strap resolution</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Push all 3 versions to GitHub</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Hero product render (tsuka-maki bat)</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V pilot — $50–100 Meta spend</strong><span class="mm">Prove monitoring concept</span></div></div>
+      </div>
+    </div></div>
+    <div id="sd-tk" class="dp"><div id="dtasks-sd"></div></div>
+  </div>
+
+  <!-- JOBS -->
+  <div id="detail-jobs" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Parallel Track</div><div class="dt">💼 Job Search HQ</div></div><div style="margin-left:auto"><span class="badge bb"><span class="dot"></span>Active</span></div></div>
+    <div class="g2" style="margin-top:.5rem">
+      <div class="card"><div class="card-title">Pipeline</div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>TAG/Motto</strong><span class="mm">HM interview pending · de-emphasize AI · contextualize VP title</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Netflix</strong><span class="mm">Referral via Catherine Gilmore Goetz · do NOT apply directly</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>JPMorgan</strong><span class="mm">Warm contact · resume sent April 2026</span></div></div>
+        <div class="ms"><div class="mi done">✗</div><div class="mt"><strong>Salesforce Exec Partnerships</strong><span class="mm">PASSED</span></div></div>
+      </div>
+      <div class="card"><div class="card-title">Rules</div>
+        <div class="al2 o" style="margin-bottom:.5rem"><strong>VP title:</strong> Never change on any resume. Contextualize — don't hide.</div>
+        <div class="al2 y" style="margin-bottom:.5rem"><strong>AI language:</strong> De-emphasize for TAG specifically.</div>
+        <div class="card-body"><strong style="color:var(--white)">Comp targets:</strong> $100–110K floor · $125K+ ceiling · $145–165K Director-level (Wellhub, Driven Brands)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HORROR GAME -->
+  <div id="detail-horror" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Father-Son Project · Phase 3</div><div class="dt">👾 Asymmetrical Horror Game</div></div><div style="margin-left:auto"><span class="badge bp">Phase 3</span></div></div>
+    <div class="card"><div class="card-title">What it is</div><div class="card-body">Father-son vibe coding project using Roblox Studio. Son is creative director. You're the builder. Claude writes Luau code. Asymmetrical horror, kid-friendly mechanics.<br><br><strong style="color:var(--white)">Stack:</strong> Roblox Studio (free) + Rebirth AI Plugin (~$9/mo) connects to Studio and writes Luau scripts from plain English. 5 free credits to start.<br><br><strong style="color:var(--white)">Process:</strong> Claude designs game concept doc (mechanics, maps, monster rules) → Rebirth scripts it in Studio → son describes what he wants → you build it → share with his friends for instant feedback.<br><br><strong style="color:var(--white)">Gate:</strong> Start once vibe coding clicks from other projects. Skills transfer directly. Phase 3 timing.</div></div>
+  </div>
+
+  <!-- MY PLAN -->
+  <div id="detail-myplan" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Personal PWA</div><div class="dt">📋 My Plan App</div></div><div style="margin-left:auto"><span class="badge bl"><span class="dot"></span>Live · Feature Complete</span></div></div>
+    <div class="card"><div class="card-title">What it is</div><div class="card-body">Single-file HTML PWA. Meal planning + workout + inventory + habit check-ins + weight tracker with trend line + cook mode + meal swap + shopping lists + export/import. Mets palette. localStorage keyed to myplan_v3.<br><br><strong style="color:var(--white)">Brand role:</strong> Portfolio POC demonstrating rapid AI-assisted builds. No research sprint needed.</div></div>
+  </div>
+
+  <!-- DATE NIGHT -->
+  <div id="detail-datenight" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Personal App</div><div class="dt">🌆 Date Night HQ</div></div><div style="margin-left:auto"><span class="badge bp">Planned</span></div></div>
+    <div class="card"><div class="card-title">What it is</div><div class="card-body">Personal app for planning date nights. Recommendations, saved spots by occasion, ideas bank, past dates log, upcoming occasion tracker. Single-file HTML PWA like My Plan.<br><br><strong style="color:var(--white)">Build approach:</strong> 1–2 hr vibe coding session once My Plan pattern is locked. Reuse same HTML/CSS/localStorage architecture.<br><br><strong style="color:var(--white)">Gate:</strong> Build after core BbV work is shipped. Personal project — Phase 2+.</div></div>
+  </div>
+
+  <!-- NEUDAY -->
+  <div id="detail-neuday" class="dv">
+    <div class="dh"><button class="bb2" onclick="closeProject()">← Back</button><div><div class="sec-lbl">Personal Health Plan · UX Reference</div><div class="dt">🧘 Neuday / Personal Health Plan</div></div><div style="margin-left:auto"><span class="badge bp">Planned</span></div></div>
+    <div class="card"><div class="card-title">What it is</div><div class="card-body">Use Neuday (neuday.io, $9.99/mo) as UI/feature reference — specifically its onboarding survey, protocol framing, and copy style — to improve the personal health section of My Plan or build a standalone health plan app.<br><br><strong style="color:var(--white)">Options:</strong><br>1. Add a "Health Protocol" section to My Plan using Neuday's copy/UX as reference<br>2. Build a standalone personal health plan PWA<br><br><strong style="color:var(--white)">Routing:</strong> Sonnet for copy writing. Claude Code for build. Neuday as reference only — original copy required.</div></div>
+  </div>
+
+</div><!-- /overview -->
+
+<!-- ═══════════ RESEARCH ═══════════ -->
+<div id="research" class="panel">
+  <div class="sec-lbl">Sprint Sequence</div><div class="sec-title">Research Plan — All Projects</div>
+  <div class="al2 o" style="margin-bottom:1.1rem"><strong>Order:</strong> P1 BbV Consulting (now, gates everything) → P2 V (after BbV, gates TCS + LBI pitch) → P3 Southside Drops (after design complete) → Finance App (active in separate thread). Pricing research and target demo research are embedded in P1 + P2.</div>
+  <div class="g3" style="margin-bottom:1.1rem">
+    <div class="card" style="border-color:rgba(255,89,16,.3)"><div class="card-title" style="color:var(--orange)">P1 · BbV Consulting ← Start Now</div><div class="card-body"><strong style="color:var(--white)">When:</strong> Now.<br><strong style="color:var(--white)">Tool:</strong> NotebookLM (5 prompts) → Sonnet.<br><strong style="color:var(--white)">Also answers:</strong> Full service vs. strategy only · SMB needs · nonprofit needs · pricing benchmarks · target demo.<br><strong style="color:var(--white)">Outputs:</strong> Service definition · ICP · positioning · site copy brief · TCS + LBI pitch frameworks.<br><br>Full prompts: open builtbyvega.com card → Research Sprint tab.</div></div>
+    <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="card-title" style="color:var(--cyan)">P2 · V — Voice Assistant</div><div class="card-body"><strong style="color:var(--white)">When:</strong> After BbV sprint.<br><strong style="color:var(--white)">Tool:</strong> NotebookLM (4 prompts) → Sonnet.<br><strong style="color:var(--white)">Also answers:</strong> Pricing for V client installs · target demo for V.<br><strong style="color:var(--white)">Outputs:</strong> Updated V pricing · client pitch one-pager (TCS + LBI) · MVP feature list.<br><br>Full prompts: open V card → Research Sprint tab.</div></div>
+    <div class="card" style="border-color:rgba(245,158,11,.3)"><div class="card-title" style="color:var(--yellow)">P3 · Southside Drops</div><div class="card-body"><strong style="color:var(--white)">When:</strong> After design phase complete.<br><strong style="color:var(--white)">Tool:</strong> NotebookLM (4 prompts) → Sonnet.<br><strong style="color:var(--white)">Outputs:</strong> SD case study brief · V brand monitoring demo script · distribution recommendation.<br><br>Full prompts: open Southside Drops card → Research Sprint tab.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Standard 5-Phase Sprint Template</div>
+    <div class="g2" style="margin-top:.7rem">
+      <div>
+        <div class="sp"><div class="spt">Phase 0 — Define (Sonnet · 1–2 hrs)</div><div class="spb">Problem statement · target user · revenue hypothesis · top 5 comps · success criteria</div></div>
+        <div class="sp c"><div class="spt">Phase 1 — Research (NotebookLM · zero tokens)</div><div class="spb">Add sources first. Competitive analysis · TAM/SAM/SOM · user pain points · regulatory · distribution</div></div>
+        <div class="sp g"><div class="spt">Phase 2 — Synthesis (Sonnet)</div><div class="spb">1-page brief · feature priority matrix · revenue validation · risk ID · go/no-go gate</div></div>
+      </div>
+      <div>
+        <div class="sp p"><div class="spt">Phase 3 — Spec (Sonnet)</div><div class="spb">Spec → openclaw/docs/superpowers/specs/ · tech stack · shared infra deps · BUILDLOG.md · routing assignment</div></div>
+        <div class="sp y"><div class="spt">Phase 4 — Build (Claude Code)</div><div class="spb">Spec → iterative builds with GitHub push · BUILDLOG.md at each milestone · no unnecessary abstractions · audit before pushing</div></div>
+        <div class="sp m"><div class="spt">Phase 5 — Deploy + Review</div><div class="spb">Deploy · document in BUILDLOG.md · update this dashboard · identify what gets reused next</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ROADMAP ═══════════ -->
+<div id="roadmap" class="panel">
+  <div class="sec-lbl">Build Sequence</div><div class="sec-title">Unified Roadmap</div>
+  <div class="g2">
+    <div>
+      <div class="card" style="margin-bottom:.9rem"><div class="card-title">🔥 NOW — May 2026</div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>BbV consulting research sprint (P1)</strong><span class="mm">5 prompts · gates site + TCS + LBI</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Finish SD design phase</strong><span class="mm">Shogun redo · CTA tee swap · push 3 versions</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>V — gstack slash commands</strong><span class="mm">Claude Code · active next step</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>Finance App sprint</strong><span class="mm">Active in separate thread</span></div></div>
+        <div class="ms"><div class="mi wip">→</div><div class="mt"><strong>TAG/Motto HM interview prep</strong></div></div>
+      </div>
+      <div class="card"><div class="card-title">📅 NEXT — Q2–Q3 2026</div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V research sprint (P2)</strong><span class="mm">After BbV sprint</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V pilot on Southside — $50–100 Meta</strong><span class="mm">Prove monitoring concept</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>builtbyvega.com full build</strong><span class="mm">After research outputs locked</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>BbV Ops infrastructure</strong><span class="mm">Intake survey · contract gen · info packet · visitor tracker</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>TCS outreach</strong><span class="mm">After V pilot proven</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>LBI outreach</strong><span class="mm">After V proven + BbV research locked</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>SD research sprint (P3)</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Harvard D³ — enroll</strong><span class="mm">$279 flat</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.9rem"><div class="card-title">🚀 PHASE 2 — Q3–Q4 2026</div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Finance App MVP</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>First BbV Tier 1 client ($1,500)</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>LBI website refresh + bookstore</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V master workflow skill</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Date Night HQ app</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Neuday / health plan copy</strong></div></div>
+      </div>
+      <div class="card"><div class="card-title">🌐 PHASE 3 — 2027</div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Obsidian KB</strong><span class="mm">Replaces memory.json</span></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Personal AI concierge</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Ruflo multi-agent</strong></div></div>
+        <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Asymmetrical horror game</strong><span class="mm">Father-son · Roblox</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ BbV OPS ═══════════ -->
+<div id="ops" class="panel">
+  <div class="sec-lbl">Business Infrastructure</div><div class="sec-title">BbV Ops — Build Before First Client</div>
+  <div class="al2 o" style="margin-bottom:1.1rem"><strong>These are the operational systems that need to exist before TCS or LBI become paying clients.</strong> Build them in parallel with the site. Most are 1–2 hour Claude Code builds.</div>
+
+  <div class="g2" style="margin-bottom:1rem">
+    <div class="card"><div class="card-title">📋 Client Intake Survey</div><div class="card-body">Embedded form on builtbyvega.com. Captures: company name, industry, goals, budget range, timeline, how they heard about BbV. Feeds V so Dan has a full client brief before the first call.<br><br><strong style="color:var(--white)">Build:</strong> Typeform or Tally (free tier) embedded on site, OR single-file HTML form with email delivery. V reads the submission and generates a briefing doc automatically.<br><br><strong style="color:var(--white)">Gate:</strong> Site build must be live first.</div></div>
+
+    <div class="card"><div class="card-title">📦 Client Info Packet (Inbound + Outbound)</div><div class="card-body">When a potential client inquires: V generates a full info packet for Dan AND a welcome packet for them automatically.<br><br><strong style="color:var(--white)">Dan's packet includes:</strong> Client background summary, company research, relevant BbV case studies, suggested tier + pricing, talking points for discovery call.<br><br><strong style="color:var(--white)">Client's packet includes:</strong> BbV services overview, case studies relevant to their industry, proposed scope, pricing tiers, next steps, Dan's bio.<br><br><strong style="color:var(--white)">Build:</strong> V skill — triggered by intake form submission or manual prompt.</div></div>
+
+    <div class="card"><div class="card-title">📝 Contract Generation & Management</div><div class="card-body">Template contracts for each tier (T1/T2/T3) and for client builds (LBI website, etc.).<br><br><strong style="color:var(--white)">Contents:</strong> Scope of work, deliverables, timeline, payment terms, IP ownership, revision policy, kill fee.<br><br><strong style="color:var(--white)">Build options:</strong> Docusign (paid) · HelloSign/Dropbox Sign · Bonsai (freelancer-focused, has contracts + invoicing) · OR Claude generates PDF from template, Dan sends manually.<br><br><strong style="color:var(--white)">Action:</strong> Write master contract template in Sonnet → store in openclaw/docs/contracts/ → V populates per engagement.</div></div>
+
+    <div class="card"><div class="card-title">📊 Website Visitor Tracker</div><div class="card-body">Know who's visiting builtbyvega.com before you have a live product.<br><br><strong style="color:var(--white)">Recommended:</strong> Plausible Analytics ($9/mo) or Fathom ($14/mo) — both privacy-first (no cookies, GDPR compliant), which aligns with BbV positioning. Simpleanalytics also good at $9/mo.<br><br><strong style="color:var(--white)">What to track:</strong> Pages visited, referral sources (LinkedIn vs. direct), geography, device. Set up the moment the full site goes live.<br><br><strong style="color:var(--white)">Gate:</strong> Full site build.</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><div class="card-title">🏷️ Tagline Decision</div><div class="card-body">Two candidates from previous chats:<br><br><strong style="color:var(--orange)">1. "Ideas, Activated."</strong><br>Clean. Punchy. Works for both consulting and product. Already on the LinkedIn banner and coming soon page.<br><br><strong style="color:var(--orange)">2. "Built by Vega. Runs by V."</strong><br>The one from the April logo chat. More specific — anchors V as the operational layer. Works better for BbV product pitches than pure consulting.<br><br><strong style="color:var(--white)">Recommendation:</strong> Use both. "Ideas, Activated." as the brand tagline on the site. "Built by Vega. Runs by V." as the product/V-specific line in client pitches and the builtbyvega.com product section. Both are yours.</div></div>
+
+    <div class="card"><div class="card-title">🔍 Research: Pricing + Target Demo</div><div class="card-body">Both of these are answered by the <strong style="color:var(--orange)">BbV Consulting Research Sprint (P1)</strong> — not separate work.<br><br><strong style="color:var(--white)">Pricing research:</strong> NotebookLM Prompt 4 — benchmarks from entry ($1,500 flat) to senior retainer ($8–15K/mo).<br><br><strong style="color:var(--white)">Target demo research:</strong> NotebookLM Prompts 3 + 5 — SMB vs. nonprofit ICP, Chicago market landscape, who's hiring and what triggers the decision.<br><br>Do not run these as separate sprints — they're embedded in P1. One sprint, multiple outputs.</div></div>
+
+    <div class="card"><div class="card-title">⚙️ Full Service vs. Strategy + Branding Only</div><div class="card-body">This is a fundamental business model decision that needs to be made before writing site copy.<br><br><strong style="color:var(--white)">Full service</strong> = Dan executes campaigns, manages vendors, produces deliverables, runs V monitoring. Higher billing but more time-intensive.<br><br><strong style="color:var(--white)">Strategy + branding only</strong> = Dan builds the plan and brand, client executes. Lower billing, more scalable, better for solo operation.<br><br><strong style="color:var(--white)">Tiered hybrid</strong> = Strategy at T1, strategy + some execution at T2, full service at T3.<br><br>The research sprint (P1, Prompt 2) gives you market data on what clients actually expect. Decide after that sprint, not before.</div></div>
+
+    <div class="card"><div class="card-title">📋 SMB + Nonprofit Needs Defined</div><div class="card-body">Needs to be answered before site copy and service page. Research sprint P1, Prompt 3 covers this specifically.<br><br><strong style="color:var(--white)">SMBs typically need:</strong> Brand building, lead gen, content strategy, marketing ops setup, sponsorship/partnership strategy.<br><br><strong style="color:var(--white)">Nonprofits typically need:</strong> Donor communications, community partnerships, cause marketing, grant positioning, volunteer recruitment campaigns.<br><br><strong style="color:var(--white)">Both need:</strong> Integrated campaign thinking and strategic leadership at a price point they can afford.<br><br>Run the research sprint to validate these assumptions against current market data before locking service specs.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ REVENUE ═══════════ -->
+<div id="revenue" class="panel">
+  <div class="sec-lbl">Business Model</div><div class="sec-title">Revenue Map</div>
+  <div class="g2" style="margin-bottom:1rem">
+    <div class="card"><div class="card-title">Consulting Tiers</div>
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.18);border-radius:8px;padding:.7rem"><div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.76rem">Tier 1 — Entry</div><div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--white);margin:.18rem 0">$1,500 flat</div><div style="font-size:.66rem;color:#94a3b8">Project-based. Sponsorship proposal, campaign brief, single deliverable.</div></div>
+        <div style="background:rgba(255,89,16,.05);border:1px solid rgba(255,89,16,.18);border-radius:8px;padding:.7rem"><div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--orange);font-size:.76rem">Tier 2 — Retainer</div><div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--white);margin:.18rem 0">$500 + $750–$1K/mo</div><div style="font-size:.66rem;color:#94a3b8">Ongoing fractional CMO. Monthly deliverables + strategy + AI tool access.</div></div>
+        <div style="background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.18);border-radius:8px;padding:.7rem"><div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple);font-size:.76rem">Tier 3 — Full Engagement</div><div style="font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--white);margin:.18rem 0">$1,500 + $1,500–$2K/mo</div><div style="font-size:.66rem;color:#94a3b8">Min $3K/mo media spend. Full campaign execution + AI ops + V sub-agent.</div></div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Revenue Waterfall</div>
+      <div style="margin-top:.45rem">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem"><div style="width:110px;font-size:.66rem;color:#94a3b8;flex-shrink:0">Finance App</div><div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden"><div style="width:80%;height:100%;background:var(--green);border-radius:99px"></div></div><div style="font-size:.6rem;color:var(--muted);font-family:'JetBrains Mono',monospace;width:70px;text-align:right">Ads · Primary</div></div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem"><div style="width:110px;font-size:.66rem;color:#94a3b8;flex-shrink:0">BbV Consulting</div><div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden"><div style="width:65%;height:100%;background:var(--orange);border-radius:99px"></div></div><div style="font-size:.6rem;color:var(--muted);font-family:'JetBrains Mono',monospace;width:70px;text-align:right">T1–T3</div></div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem"><div style="width:110px;font-size:.66rem;color:#94a3b8;flex-shrink:0">V (installs)</div><div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden"><div style="width:50%;height:100%;background:var(--cyan);border-radius:99px"></div></div><div style="font-size:.6rem;color:var(--muted);font-family:'JetBrains Mono',monospace;width:70px;text-align:right">Custom</div></div>
+        <div style="display:flex;align-items:center;gap:.6rem"><div style="width:110px;font-size:.66rem;color:#94a3b8;flex-shrink:0">LBI (client)</div><div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden"><div style="width:35%;height:100%;background:var(--yellow);border-radius:99px"></div></div><div style="font-size:.6rem;color:var(--muted);font-family:'JetBrains Mono',monospace;width:70px;text-align:right">Project fee</div></div>
+        <div class="hr"></div>
+        <div class="card-body"><strong style="color:var(--white)">Sequence:</strong> SD design → V pilot → TCS → T1 revenue → LBI → Finance App → ad revenue</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ INFRA ═══════════ -->
+<div id="infra" class="panel">
+  <div class="sec-lbl">Shared Infrastructure</div><div class="sec-title">Build Once, Reuse Everywhere</div>
+  <div class="g2">
+    <div class="card"><div class="card-title">Hosting & Repos</div>
+      <table class="tbl"><thead><tr><th>Project</th><th>Host</th><th>Repo</th></tr></thead><tbody>
+        <tr><td>builtbyvega.com</td><td>Cloudflare Workers</td><td class="mono">drv721/builtbyvega</td></tr>
+        <tr><td>Southside Drops</td><td>GitHub Pages</td><td class="mono">drv721/murakami</td></tr>
+        <tr><td>My Plan</td><td>GitHub Pages</td><td class="mono">drv721/claude-apps</td></tr>
+        <tr><td>V</td><td>Mac Mini + iCloud</td><td class="mono">drv721/openclaw</td></tr>
+        <tr><td>Finance App</td><td>AWS Phase 2</td><td class="mono">TBD</td></tr>
+        <tr><td>LBI</td><td>TBD (post-V)</td><td class="mono">TBD</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card"><div class="card-title">Critical Technical Notes</div>
+      <div class="al2 r" style="margin-bottom:.45rem"><strong>Deepgram SDK v6.1.1:</strong> Keyword-only args. Positional dict = TypeError.</div>
+      <div class="al2 y" style="margin-bottom:.45rem"><strong>load_dotenv:</strong> override=True required. Stale env = 401.</div>
+      <div class="al2 y" style="margin-bottom:.45rem"><strong>API keys:</strong> Name per machine. Watch trailing % in .env.</div>
+      <div class="al2 c" style="margin-bottom:.45rem"><strong>Images:</strong> GitHub Pages URLs not base64. Prevents ~8MB bloat.</div>
+      <div class="al2 c"><strong>Prompt caching:</strong> cache_control: ephemeral on system prompts &gt;1024 tokens.</div>
+      <div class="al2 g2"><strong>Claude Code (builtbyvega):</strong> CLAUDE.md is the project brain — update when tools or architecture change. Cloudflare + GitHub MCPs permanent. Plugins active: frontend-design, learning-output-style, explanatory-output-style, claude-md-management, skill-creator. Stop + PreToolUse + SessionStart hooks live. Memory MCP: hold until V dev begins.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MILESTONES ═══════════ -->
+<div id="milestones" class="panel">
+  <div class="sec-lbl">Growth Benchmarks</div><div class="sec-title">3 / 6 / 12 Month Targets</div>
+  <div class="g3">
+    <div class="card" style="border-color:rgba(34,197,94,.2)"><div class="card-title"><span style="color:var(--green)">●</span> Aug 2026 — 3 Months</div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>All 3 research sprints complete</strong><span class="mm">BbV + V + SD · outputs locked</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>BbV Ops infrastructure live</strong><span class="mm">Intake · contract · info packet · visitor tracker</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>SD design phase done</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V pilot proven on Southside</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>First BbV client engaged</strong><span class="mm">Revenue &gt; $0</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>builtbyvega.com full site live</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Job search resolved or Director pipeline built</strong></div></div>
+    </div>
+    <div class="card" style="border-color:rgba(255,89,16,.2)"><div class="card-title"><span style="color:var(--orange)">●</span> Nov 2026 — 6 Months</div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Finance App MVP shipped</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>2–3 BbV clients active</strong><span class="mm">$2–4K/mo consulting</span></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>LBI website + bookstore shipped</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>V visual layer + master workflow</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Harvard D³ cert complete</strong></div></div>
+    </div>
+    <div class="card" style="border-color:rgba(168,85,247,.2)"><div class="card-title"><span style="color:var(--purple)">●</span> May 2027 — 12 Months</div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>BbV $5–10K/mo</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Personal AI concierge Phase 1</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Obsidian KB live</strong></div></div>
+      <div class="ms"><div class="mi todo">○</div><div class="mt"><strong>Asymmetrical horror game shipped</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TASKS ═══════════ -->
+<div id="tasks" class="panel">
+  <div class="sec-lbl">Sprint Board</div><div class="sec-title">All Active Tasks</div>
+  <div class="g3">
+    <div>
+      <div class="card" style="margin-bottom:.85rem"><div class="card-title">⚾ Southside Drops</div><div id="t-sd"></div></div>
+      <div class="card"><div class="card-title">💼 Job Search</div><div id="t-jobs"></div></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.85rem"><div class="card-title">🔬 Research Sprints</div><div id="t-research"></div></div>
+      <div class="card" style="margin-bottom:.85rem"><div class="card-title">🏗️ BbV Ops</div><div id="t-ops"></div></div>
+      <div class="card"><div class="card-title">💳 Finance App</div><div id="t-finance"></div></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.85rem"><div class="card-title">🎙️ V</div><div id="t-v"></div></div>
+      <div class="card"><div class="card-title">🌐 builtbyvega.com</div><div id="t-bbv"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRIORITY QUEUE ═══════════ -->
+<div id="priority" class="panel">
+  <div class="sec-lbl">Master Priority List</div><div class="sec-title">What to Do Next — In Order</div>
+  <div class="al2 o" style="margin-bottom:1.1rem"><strong>Everything ordered by what unlocks what.</strong> Each phase gates the next. Check tasks off as you finish — state syncs with the Tasks tab.</div>
+  <div id="priority-list"></div>
+</div>
+
+<script>
+// ── Navigation ──
+function showPanel(id,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');if(el)el.classList.add('active');}
+
+// ── Project open/close ──
+function openProject(id){
+  ['proj-grid-core','proj-grid-client','proj-grid-personal'].forEach(g=>{const el=document.getElementById(g);if(el)el.style.display='none';});
+  document.querySelectorAll('#overview .sec-lbl, #overview .section-hdr').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.dv').forEach(d=>d.classList.remove('active'));
+  const d=document.getElementById('detail-'+id);
+  if(d){d.classList.add('active');renderDTasks(id);}
+}
+function closeProject(){
+  document.querySelectorAll('.dv').forEach(d=>d.classList.remove('active'));
+  ['proj-grid-core','proj-grid-client','proj-grid-personal'].forEach(g=>{const el=document.getElementById(g);if(el)el.style.display='';});
+  document.querySelectorAll('#overview .sec-lbl, #overview .section-hdr').forEach(e=>e.style.display='');
+}
+
+// ── Detail inner tabs ──
+function dTab(proj,tab,el){
+  document.querySelectorAll('#detail-'+proj+' .dp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#detail-'+proj+' .dtab').forEach(t=>t.classList.remove('active'));
+  const p=document.getElementById(proj+'-'+tab);if(p)p.classList.add('active');if(el)el.classList.add('active');
+}
+
+// ── Tasks data ──
+const TASKS={
+  sd:[
+    {id:'sd1',title:'Redo Shogun line renders',note:'Tier 3 · blocking design complete',pri:'HIGH'},
+    {id:'sd2',title:'Replace Nippon tee with CTA/Shinkansen concept',note:'Swap transit concept',pri:'HIGH'},
+    {id:'sd3',title:'Resolve bag strap design',note:'Parked · GPT closest',pri:'MED'},
+    {id:'sd4',title:'Push all 3 versions to GitHub',note:'scroll deck · cinematic · 3D plate',pri:'HIGH'},
+    {id:'sd5',title:'Hero product render: tsuka-maki bat',note:'Shogun line · wall piece',pri:'MED'},
+    {id:'sd6',title:'V pilot — $50–100 Meta spend',note:'Prove monitoring concept · gate for TCS + LBI',pri:'HIGH'},
+  ],
+  research:[
+    {id:'r1',title:'BbV consulting sprint (P1) — Define phase',note:'Problem statement + ICP hypothesis',pri:'HIGH'},
+    {id:'r2',title:'BbV consulting sprint (P1) — NotebookLM (5 prompts)',note:'Add sources first',pri:'HIGH'},
+    {id:'r3',title:'BbV consulting sprint (P1) — Synthesis + outputs',note:'Service def · pricing · positioning · TCS + LBI frameworks',pri:'HIGH'},
+    {id:'r4',title:'V sprint (P2) — NotebookLM (4 prompts)',note:'After BbV sprint',pri:'MED'},
+    {id:'r5',title:'V sprint (P2) — Synthesis + pitch one-pager',note:'Gate for TCS + LBI pitches',pri:'MED'},
+    {id:'r6',title:'SD sprint (P3)',note:'After design phase complete',pri:'LOW'},
+  ],
+  ops:[
+    {id:'o1',title:'Client intake survey build',note:'Tally/Typeform or HTML form · embedded on site',pri:'HIGH'},
+    {id:'o2',title:'Client info packet (inbound + outbound)',note:'V skill · auto-generates brief for Dan + welcome packet for client',pri:'HIGH'},
+    {id:'o3',title:'Contract template — T1/T2/T3 + project',note:'Sonnet drafts · store in openclaw/docs/contracts/',pri:'HIGH'},
+    {id:'o4',title:'Contract management tool decision',note:'Bonsai vs. HelloSign vs. manual PDF',pri:'MED'},
+    {id:'o5',title:'Website visitor tracker setup',note:'Plausible or Fathom · add on site launch',pri:'MED'},
+    {id:'o6',title:'Decide: full service vs. strategy only',note:'After P1 research sprint · Prompt 2',pri:'HIGH'},
+    {id:'o7',title:'SMB service spec defined',note:'After P1 research sprint · Prompt 3',pri:'MED'},
+    {id:'o8',title:'Nonprofit service spec defined',note:'After P1 research sprint · Prompt 3',pri:'MED'},
+    {id:'o9',title:'Tagline decision: "Ideas, Activated." vs. "Built by Vega. Runs by V."',note:'Or use both — site vs. product pitch',pri:'LOW'},
+  ],
+  finance:[
+    {id:'f1',title:'Complete research sprint (separate thread)',note:'~40% done',pri:'HIGH'},
+    {id:'f2',title:'Synthesis + strategic brief + go/no-go gate',note:'Sonnet',pri:'HIGH'},
+    {id:'f3',title:'Write spec → openclaw/docs/superpowers/specs/',note:'Tech stack · AWS auth',pri:'MED'},
+    {id:'f4',title:'MVP build',note:'Claude Code · privacy-first · rewards core',pri:'MED'},
+  ],
+  v:[
+    {id:'v1',title:'gstack slash commands',note:'Claude Code · CEO/eng/QA commands',pri:'HIGH'},
+    {id:'v2',title:'V research sprint (P2)',note:'After BbV sprint · before TCS + LBI pitch',pri:'HIGH'},
+    {id:'v3',title:'Clicky visual layer',note:'clicky.so · screen-aware',pri:'MED'},
+    {id:'v4',title:'remindctl + Apple Reminders skill',note:'Native integration',pri:'MED'},
+    {id:'v5',title:'Master workflow skill',note:'Superpowers + gstack + Code chain',pri:'MED'},
+    {id:'v6',title:'Systematize end-of-session GitHub push + BUILDLOG',note:'Currently a friction point',pri:'LOW'},
+    {id:'v7',title:'Install Memory MCP when V dev begins',note:'MemPalace · local · no API key · persistent cross-session context for brand decisions + prompt iterations',pri:'LOW'},
+    {id:'v8',title:'Enable /claude-api skill at V build start',note:'Handles Claude API integration · prompt caching · tool use · model routing · cost optimization',pri:'MED'},
+  ],
+  bbv:[
+    {id:'b1',title:'Run BbV consulting research sprint (P1)',note:'Gates all site work',pri:'HIGH'},
+    {id:'b2',title:'Site copy brief from research outputs',note:'Sonnet · hero + services + positioning',pri:'HIGH'},
+    {id:'b3',title:'Full site build',note:'Claude Code · hero · services · case studies · contact · blog',pri:'HIGH'},
+    {id:'b4',title:'SD + Finance App case study pages',note:'First portfolio pieces',pri:'MED'},
+    {id:'b5',title:'Blog: "I switched from ChatGPT to Claude"',note:'LinkedIn post 4 → site content',pri:'MED'},
+    {id:'b6',title:'TCS outreach',note:'After V pilot proven + research locked',pri:'MED'},
+    {id:'b7',title:'LBI outreach',note:'After V proven on Southside + BbV research locked',pri:'MED'},
+  ],
+  jobs:[
+    {id:'j1',title:'TAG/Motto HM interview prep',note:'Contextualize VP title · de-emphasize AI',pri:'HIGH'},
+    {id:'j2',title:'Netflix — monitor referral status',note:'Catherine Gilmore Goetz · do not apply directly',pri:'MED'},
+    {id:'j3',title:'Build Director-level pipeline',note:'Wellhub · Driven Brands · $145–165K',pri:'MED'},
+    {id:'j4',title:'Update LinkedIn AI-fluent headline + skills',note:'Per March 2026 doc',pri:'HIGH'},
+  ],
+};
+
+const PC={HIGH:'var(--orange)',MED:'var(--cyan)',LOW:'var(--muted)'};
+function getC(){try{return JSON.parse(localStorage.getItem('bbv_v3')||'{}');}catch{return {};}}
+function saveC(c){localStorage.setItem('bbv_v3',JSON.stringify(c));}
+function renderList(cid,key){const el=document.getElementById(cid);if(!el)return;const c=getC();el.innerHTML=(TASKS[key]||[]).map(t=>{const d=c[t.id];return`<div class="task${d?' checked':''}" onclick="tog('${t.id}',this)"><div class="tcb">${d?'✓':''}</div><div class="tb"><strong>${t.title}</strong><span>${t.note}</span></div><div class="pri" style="color:${PC[t.pri]||'var(--muted)'}">${t.pri}</div></div>`;}).join('');}
+function renderDTasks(proj){const m={v:'v',bbv:'bbv',finance:'finance',sd:'sd',lbi:'lbi',jobs:'jobs'};if(m[proj])renderList('dtasks-'+proj,m[proj]);}
+function renderAll(){Object.keys(TASKS).forEach(k=>renderList('t-'+k,k));}
+function tog(id,el){const c=getC();c[id]=!c[id];saveC(c);el.classList.toggle('checked');el.querySelector('.tcb').textContent=c[id]?'✓':'';}
+renderAll();
+
+// ── Priority Queue ──
+const PRIORITY_QUEUE=[
+  {phase:'🔥 NOW — May 2026',color:'var(--orange)',items:[
+    {key:'research',id:'r1'},{key:'research',id:'r2'},{key:'research',id:'r3'},
+    {key:'sd',id:'sd1'},{key:'sd',id:'sd2'},
+    {key:'jobs',id:'j1'},{key:'jobs',id:'j4'},
+    {key:'v',id:'v1'},
+    {key:'finance',id:'f1'},
+  ]},
+  {phase:'📅 NEXT — After BbV Research Sprint',color:'var(--cyan)',items:[
+    {key:'ops',id:'o6'},
+    {key:'bbv',id:'b2'},{key:'bbv',id:'b3'},
+    {key:'ops',id:'o1'},{key:'ops',id:'o3'},{key:'ops',id:'o2'},
+    {key:'ops',id:'o7'},{key:'ops',id:'o8'},
+    {key:'research',id:'r4'},{key:'research',id:'r5'},{key:'v',id:'v2'},
+    {key:'jobs',id:'j2'},{key:'jobs',id:'j3'},
+    {key:'finance',id:'f2'},
+    {key:'ops',id:'o5'},{key:'ops',id:'o4'},
+  ]},
+  {phase:'⚡ THEN — After V Proven on Southside',color:'var(--purple)',items:[
+    {key:'sd',id:'sd6'},
+    {key:'sd',id:'sd3'},{key:'sd',id:'sd4'},{key:'sd',id:'sd5'},
+    {key:'bbv',id:'b6'},{key:'bbv',id:'b7'},
+    {key:'research',id:'r6'},
+    {key:'finance',id:'f3'},{key:'finance',id:'f4'},
+    {key:'bbv',id:'b4'},{key:'bbv',id:'b5'},
+  ]},
+  {phase:'🌐 LATER — Phase 2+',color:'var(--muted)',items:[
+    {key:'v',id:'v3'},{key:'v',id:'v4'},{key:'v',id:'v5'},
+    {key:'v',id:'v8'},{key:'v',id:'v6'},{key:'v',id:'v7'},
+    {key:'ops',id:'o9'},
+  ]},
+];
+const PROJ_LABELS={sd:'⚾ SD',research:'🔬 Research',ops:'🏗️ Ops',finance:'💳 Finance',v:'🎙️ V',bbv:'🌐 BbV',jobs:'💼 Jobs'};
+function renderPriority(){
+  const el=document.getElementById('priority-list');
+  if(!el)return;
+  const c=getC();
+  el.innerHTML=PRIORITY_QUEUE.map(ph=>{
+    const items=ph.items.map(({key,id})=>{
+      const t=(TASKS[key]||[]).find(x=>x.id===id);
+      if(!t)return'';
+      const d=c[t.id];
+      return`<div class="task${d?' checked':''}" onclick="tog('${t.id}',this)"><div class="tcb">${d?'✓':''}</div><div class="tb"><strong>${t.title}</strong><span>${t.note}</span></div><div style="display:flex;gap:.4rem;align-items:center;margin-left:auto;flex-shrink:0"><span class="badge bp" style="font-size:.5rem;padding:.12rem .3rem">${PROJ_LABELS[key]||key}</span><div class="pri" style="color:${PC[t.pri]||'var(--muted)'}">${t.pri}</div></div></div>`;
+    }).join('');
+    return`<div style="margin-bottom:1.2rem"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:.8rem;color:${ph.color};border-left:3px solid ${ph.color};padding-left:.65rem;margin-bottom:.55rem;letter-spacing:.03em">${ph.phase}</div><div class="card">${items}</div></div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
