@@ -19,7 +19,7 @@ html.light{
   --line:rgba(18,32,61,0.14); --line-strong:rgba(18,32,61,0.28);
   --surface:#FFFFFF; --surface-2:rgba(255,255,255,0.55);
   --rule:rgba(0,45,114,0.14);
-  --split-a:#002D72; --split-b:#D96A2B;  /* V: navy/ember */
+  --split-a:var(--ink); --split-b:var(--accent);  /* V follows headline + tagline */
   --star:rgba(18,32,61,0.16);
   --svg-line:rgba(18,32,61,0.22); --svg-dot:rgba(18,32,61,0.32);
   --on-accent:#FFFFFF; --chip-border:rgba(18,32,61,0.16);
@@ -32,7 +32,7 @@ html.dark{
   --line:rgba(47,111,106,0.3); --line-strong:rgba(47,111,106,0.5);
   --surface:rgba(21,53,68,0.9); --surface-2:rgba(210,232,227,0.04);
   --rule:rgba(250,250,247,0.18);
-  --split-a:#EAF4F2; --split-b:#C65A2E;  /* V: ice/ember */
+  --split-a:var(--ink); --split-b:var(--accent);  /* V follows headline + tagline */
   --star:rgba(210,232,227,0.22);
   --svg-line:rgba(210,232,227,0.2); --svg-dot:rgba(210,232,227,0.35);
   --on-accent:#0E2433; --chip-border:rgba(47,111,106,0.4);
@@ -231,8 +231,8 @@ h1.headline .split-v{
 .wave-divider{
   width:84px;height:24px;margin:18px auto;display:block;pointer-events:none;
 }
-html.light .wave-divider .w-line{stroke:#D96A2B;stroke-width:1.6;stroke-linecap:round;fill:none}
-html.light .wave-divider .w-hash{stroke:#D96A2B;stroke-width:1.4;stroke-linecap:round}
+html.light .wave-divider .w-line{stroke:var(--accent);stroke-width:1.6;stroke-linecap:round;fill:none}
+html.light .wave-divider .w-hash{stroke:var(--accent);stroke-width:1.4;stroke-linecap:round}
 html.dark .wave-divider .w-line{stroke:#D2E8E3;stroke-width:1.6;stroke-linecap:round;fill:none}
 html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:round}
 /* "That's where we come in." — own line, not italic, not shrunk, ember (CTA color) */
@@ -256,8 +256,8 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
     <div class="cmd-dot"></div>
     <div class="cmd-chip live">V active</div>
     <div class="cmd-chip link"><a href="#work" style="color:inherit;text-decoration:none">WORK</a></div>
-    <div class="cmd-chip link"><a href="#services" style="color:inherit;text-decoration:none">SERVICES</a></div>
-    <div class="cmd-chip link"><a href="#about" style="color:inherit;text-decoration:none">ABOUT</a></div>
+    <div class="cmd-chip link"><a href="#about" style="color:inherit;text-decoration:none">THE STUDIO</a></div>
+    <div class="cmd-chip link"><a href="#services" style="color:inherit;text-decoration:none">WHAT WE BUILD</a></div>
     <div class="cmd-chip link"><a href="#contact" style="color:inherit;text-decoration:none">CONTACT</a></div>
     <div class="cmd-chip theme-btn" id="themeBtn" title="Toggle theme">◐ <span id="themeLabel">auto</span></div>
   </div>
@@ -277,49 +277,11 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   <a href="#contact" class="cta">Let&rsquo;s build something →</a>
 </section>
 
-<!-- ============ TWO PATHS ============ -->
-<section class="section" id="paths">
-  <div class="section-head">
-    <span class="s-label">Choose your path</span>
-    <span class="s-index">/ 02</span>
-  </div>
-  <div class="paths">
-    <div class="path-card" id="cardIdea">
-      <div class="inner">
-        <div class="face">
-          <span class="f-num">PATH 01</span>
-          <span class="f-title">I have an idea</span>
-          <span class="f-hint">tap to see what happens next</span>
-        </div>
-        <div class="face back">
-          <span class="f-num">PATH 01 · REVEALED</span>
-          <span class="f-title">You can see what it could be &mdash; you just can&rsquo;t see the way there. We map it, build it, and put it in the world.</span>
-          <span class="f-hint">tap again to return</span>
-        </div>
-      </div>
-    </div>
-    <div class="path-card" id="cardMarketing">
-      <div class="inner">
-        <div class="face">
-          <span class="f-num">PATH 02</span>
-          <span class="f-title">I need marketing</span>
-          <span class="f-hint">tap to see what happens next</span>
-        </div>
-        <div class="face back">
-          <span class="f-num">PATH 02 · REVEALED</span>
-          <span class="f-title">You&rsquo;ve built something real &mdash; and it&rsquo;s the best-kept secret in the room. We make sure the right people find it, and remember it.</span>
-          <span class="f-hint">tap again to return</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ WORK ============ -->
 <section class="section" id="work">
   <div class="section-head">
     <span class="s-label">The work</span>
-    <span class="s-index">/ 03</span>
+    <span class="s-index">/ 02</span>
   </div>
   <div class="work-grid">
     <a class="work-card" href="https://drv721.github.io/murakami/" target="_blank" rel="noopener">
@@ -349,10 +311,37 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   </div>
 </section>
 
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="section-head">
+    <span class="s-label">The studio</span>
+    <span class="s-index">/ 03</span>
+  </div>
+  <div class="about">
+    <div class="about-content">
+      <h2>Daniel Vega,<br>with V at the controls</h2>
+      <p>Daniel runs the studio. V runs the tools. Together they move fast, ship clean, and build things that last &mdash; without the overhead of a traditional agency.</p>
+      <div class="v-line">V &mdash; always running</div>
+    </div>
+    <div class="visual-card">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <line class="v-svg-line" x1="10" y1="60" x2="60" y2="10"/>
+        <line class="v-svg-line" x1="110" y1="60" x2="60" y2="10"/>
+        <line class="v-svg-line" x1="60" y1="10" x2="60" y2="110"/>
+        <circle class="v-svg-dot" cx="10" cy="60" r="3"/>
+        <circle class="v-svg-dot" cx="110" cy="60" r="3"/>
+        <circle class="v-svg-dot" cx="60" cy="110" r="3"/>
+        <circle class="v-svg-ring" cx="60" cy="10" r="12" fill="none" stroke-width="1.5"/>
+        <circle class="v-svg-core" cx="60" cy="10" r="3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SERVICES ============ -->
 <section class="section" id="services">
   <div class="section-head">
-    <span class="s-label">What we do</span>
+    <span class="s-label">What we build</span>
     <span class="s-index">/ 04</span>
   </div>
   <div class="modules">
@@ -377,29 +366,40 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
+<!-- ============ TWO PATHS ============ -->
+<section class="section" id="paths">
   <div class="section-head">
-    <span class="s-label">The studio</span>
+    <span class="s-label">Choose your path</span>
     <span class="s-index">/ 05</span>
   </div>
-  <div class="about">
-    <div class="about-content">
-      <h2>Daniel Vega,<br>with V at the controls</h2>
-      <p>Daniel runs the studio. V runs the tools. Together they move fast, ship clean, and build things that last &mdash; without the overhead of a traditional agency.</p>
-      <div class="v-line">V &mdash; always running</div>
+  <div class="paths">
+    <div class="path-card" id="cardIdea">
+      <div class="inner">
+        <div class="face">
+          <span class="f-num">PATH 01</span>
+          <span class="f-title">I have an idea</span>
+          <span class="f-hint">tap to see what happens next</span>
+        </div>
+        <div class="face back">
+          <span class="f-num">PATH 01 · REVEALED</span>
+          <span class="f-title">You can see what it could be &mdash; you just can&rsquo;t see the way there. We map it, build it, and put it in the world.</span>
+          <span class="f-hint">tap again to return</span>
+        </div>
+      </div>
     </div>
-    <div class="visual-card">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <line class="v-svg-line" x1="10" y1="60" x2="60" y2="10"/>
-        <line class="v-svg-line" x1="110" y1="60" x2="60" y2="10"/>
-        <line class="v-svg-line" x1="60" y1="10" x2="60" y2="110"/>
-        <circle class="v-svg-dot" cx="10" cy="60" r="3"/>
-        <circle class="v-svg-dot" cx="110" cy="60" r="3"/>
-        <circle class="v-svg-dot" cx="60" cy="110" r="3"/>
-        <circle class="v-svg-ring" cx="60" cy="10" r="12" fill="none" stroke-width="1.5"/>
-        <circle class="v-svg-core" cx="60" cy="10" r="3"/>
-      </svg>
+    <div class="path-card" id="cardMarketing">
+      <div class="inner">
+        <div class="face">
+          <span class="f-num">PATH 02</span>
+          <span class="f-title">I need marketing</span>
+          <span class="f-hint">tap to see what happens next</span>
+        </div>
+        <div class="face back">
+          <span class="f-num">PATH 02 · REVEALED</span>
+          <span class="f-title">You&rsquo;ve built something real &mdash; and it&rsquo;s the best-kept secret in the room. We make sure the right people find it, and remember it.</span>
+          <span class="f-hint">tap again to return</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>

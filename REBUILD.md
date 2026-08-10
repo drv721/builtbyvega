@@ -34,12 +34,19 @@ Smallest shippable slice: stage-1 landing, single-file, deployable. Soft budget:
 - **Repo rebuilt:** index.html = v13 (replaced 1.7MB stale React bundle), DESIGN.md + README + CLAUDE.md updated to reality.
 - **Deploy: NOT DONE — awaiting Daniel's explicit go** (irreversible bucket rule). Command: `npx wrangler deploy` from bbv-repo.
 
+### 2026-08-10 (iteration 2 — v14, Daniel's direct feedback)
+- **V split mark colors now follow the headline + tagline** in both themes: `--split-a:var(--ink)` (headline), `--split-b:var(--accent)` (tagline) — no more navy/ember in the V.
+- **Wave divider = accent orange (`var(--accent)`) in light, ice (`#D2E8E3`) in dark.**
+- **Section order changed** (was: Two paths → Work → Services → About): now **Hero → The work → The studio → What we build → Choose your path → Contact**.
+- Nav chips relabeled to match (WORK / THE STUDIO / WHAT WE BUILD / CONTACT); section indexes renumbered / 02–/ 05.
+- Built via `build_v14.py` script from v13 source. File: `bbv_landing-v14.html` → synced to repo `index.html`.
+
 ## Verification state (2026-08-10)
-- Local preview served at `http://127.0.0.1:8787/bbv_landing-v13-complete.html` (and repo copy at `/bbv-repo/index.html`)
-- Headless render: all sections present, no JS errors, themes apply (light + dark screenshots on Desktop: bbv-v13-preview-*.png)
+- Local preview served at `http://127.0.0.1:8787/bbv_landing-v14.html` (and repo copy at `/bbv-repo/index.html`)
+- Headless render: order WORK→ABOUT→SERVICES→TWO PATHS in DOM, indexes / 02–/ 05, themes apply (light + dark screenshots on Desktop: bbv-v14-preview-*.png)
 - Live links verified: murakami (301→/), red.builtbyvega.com (200), meals.html (200), red-api feed (200 JSON), builtbyvega.com (200)
 
 ## Open items
-- [ ] Daniel reviews v13 (Desktop previews + localhost) → picks anything to change
+- [ ] Daniel reviews v14 (Desktop previews + localhost) → picks anything to change
 - [ ] Deploy to Cloudflare Workers (needs token + Daniel's go)
 - [ ] Stage 2: "What's Your Idea?" V-backend centerpiece, logo via OpenDesign, contact form backend, real case-study depth

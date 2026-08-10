@@ -1,6 +1,6 @@
 # DESIGN.md — builtbyvega.com
 > **Claude Code reads this before every build session.**
-> Last updated: 2026-08-10 — reflects the shipped stage-1 build (v13).
+> Last updated: 2026-08-10 — reflects the shipped stage-1 build (v14, iteration 2).
 
 ---
 
@@ -16,7 +16,7 @@
 | **Story angle** | The AI-augmented marketer who builds what others just talk about. |
 
 ## The "V" mark
-The sub-brand symbol: a simple geometric uppercase "V", split **half navy / half orange** (clean 50% linear-gradient split). Not a tech swoosh, not a gimmick. Appears:
+The sub-brand symbol: a simple geometric uppercase "V", split **headline / tagline** (clean 50% linear-gradient split — `--split-a:var(--ink)` (headline) on the left, `--split-b:var(--accent)` (tagline orange) on the right, in BOTH themes). Not a tech swoosh, not a gimmick. Appears:
 - in the hero: the `V` in "Built by Vega" uses the split gradient (`.split-v`)
 - the "V" is a *symbol*, never an extra text mention — max 2× brand name per viewport
 - Rendered inline via CSS `background-clip:text` — no image asset needed
@@ -32,7 +32,7 @@ The sub-brand symbol: a simple geometric uppercase "V", split **half navy / half
 --navy:#002D72; --accent:#FF5910; --tert:#2F6F6A;
 --line:rgba(18,32,61,0.14); --rule:rgba(0,45,114,0.14);
 --surface:#FFFFFF; --on-accent:#FFFFFF;
---split-a:#002D72; --split-b:#D96A2B;   /* V: navy/ember */
+--split-a:var(--ink); --split-b:var(--accent);   /* V follows headline + tagline */
 ```
 
 ### Dark (mission-control r1)
@@ -41,7 +41,7 @@ The sub-brand symbol: a simple geometric uppercase "V", split **half navy / half
 --bg:#0E2433; --bg-deep:#0A1B27; --ink:#E8F0ED; --ink-soft:#D2E8E3;
 --navy:#153544; --accent:#C65A2E; --tert:#2F6F6A;
 --line:rgba(47,111,106,0.3); --surface:rgba(21,53,68,0.9); --on-accent:#0E2433;
---split-a:#EAF4F2; --split-b:#C65A2E;   /* V: ice/ember */
+--split-a:var(--ink); --split-b:var(--accent);   /* V follows headline + tagline */
 ```
 
 **Tertiary accent:** verdigris `#2F6F6A` (mint/teal from the mission-control palette) — used for eyebrows, section labels, module accents.
@@ -92,12 +92,14 @@ The sub-brand symbol: a simple geometric uppercase "V", split **half navy / half
 | # | Section | id | Notes |
 |---|---------|----|-------|
 | 01 | Hero | — | "Build by V+" split-V, tagline, wave divider, promise, CTA |
-| 02 | Two paths | `#paths` | flip cards — the "what's missing is being found" moment |
-| 03 | Work | `#work` | real project cards (Southside Drops, R.E.D., My Plan, "Your next thing") |
-| 04 | Services | `#services` | Strategy Sprint · Campaign Execution · V Deployment (T1/T2/T3 flywheel) |
-| 05 | About | `#about` | Daniel Vega with V at the controls; V-star SVG |
+| 02 | Work | `#work` | real project cards (Southside Drops, R.E.D., My Plan, "Your next thing") — first content section |
+| 03 | The studio | `#about` | Daniel Vega with V at the controls; V-star SVG |
+| 04 | What we build | `#services` | Strategy Sprint · Campaign Execution · V Deployment (T1/T2/T3 flywheel) |
+| 05 | Choose your path | `#paths` | flip cards — the "what's missing is being found" moment |
 | 06 | Contact | `#contact` | notify-me + email link |
 | — | Footer | — | "Built by Vega · Run by V", `$ stage-1 · coming soon` |
+
+**Wave divider** (`.wave-divider`, hero): stroke `var(--accent)` (orange) in light theme; `#D2E8E3` (ice) in dark theme — part of the observatory palette, never navy.
 
 ## Logo / lockup
 Logo redesign tracked separately (OpenDesign) — **not final**. Site uses the text lockup "Built by Vega · Run by V" in EB Garamond with the split-V rendered via CSS. Favicon is a simple orange V stroke (inline SVG data URI).
