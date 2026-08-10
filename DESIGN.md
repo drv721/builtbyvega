@@ -1,6 +1,6 @@
 # DESIGN.md — builtbyvega.com
 > **Claude Code reads this before every build session.**
-> Last updated: 2026-08-10 — reflects the shipped stage-1 build (v14, iteration 2).
+> Last updated: 2026-08-10 — reflects the shipped stage-1 build (v15, iteration 3).
 
 ---
 
@@ -16,7 +16,7 @@
 | **Story angle** | The AI-augmented marketer who builds what others just talk about. |
 
 ## The "V" mark
-The sub-brand symbol: a simple geometric uppercase "V", split **headline / tagline** (clean 50% linear-gradient split — `--split-a:var(--ink)` (headline) on the left, `--split-b:var(--accent)` (tagline orange) on the right, in BOTH themes). Not a tech swoosh, not a gimmick. Appears:
+The sub-brand symbol: a simple geometric uppercase "V", split **at the stroke seam** — `--split-a:var(--ink)` (headline) on the left, `--split-b:var(--accent)` (tagline orange) on the right, in BOTH themes. The fold is a `72deg` diagonal gradient (stops 50.5% / 49.5%) that follows the right stroke's inner edge, so the right stroke is FULLY orange with no bleed onto the left. Not a tech swoosh, not a gimmick. Appears:
 - in the hero: the `V` in "Built by Vega" uses the split gradient (`.split-v`)
 - the "V" is a *symbol*, never an extra text mention — max 2× brand name per viewport
 - Rendered inline via CSS `background-clip:text` — no image asset needed
@@ -92,14 +92,14 @@ The sub-brand symbol: a simple geometric uppercase "V", split **headline / tagli
 | # | Section | id | Notes |
 |---|---------|----|-------|
 | 01 | Hero | — | "Build by V+" split-V, tagline, wave divider, promise, CTA |
-| 02 | Work | `#work` | real project cards (Southside Drops, R.E.D., My Plan, "Your next thing") — first content section |
-| 03 | The studio | `#about` | Daniel Vega with V at the controls; V-star SVG |
+| 02 | The studio | `#about` | Daniel Vega with V at the controls; V-star SVG + status box (sputnik card filled: "V active") |
+| 03 | Work | `#work` | real project cards (Southside Drops, R.E.D., My Plan, "Your next thing") — second content section |
 | 04 | What we build | `#services` | Strategy Sprint · Campaign Execution · V Deployment (T1/T2/T3 flywheel) |
 | 05 | Choose your path | `#paths` | flip cards — the "what's missing is being found" moment |
 | 06 | Contact | `#contact` | notify-me + email link |
 | — | Footer | — | "Built by Vega · Run by V", `$ stage-1 · coming soon` |
 
-**Wave divider** (`.wave-divider`, hero): stroke `var(--accent)` (orange) in light theme; `#D2E8E3` (ice) in dark theme — part of the observatory palette, never navy.
+**Wave divider** (`.wave-divider`, hero): stroke driven by a `--wave` token (light + dark each). v15 offers three looks as separate files: **accent** (light = `var(--accent)` orange, dark = `#D2E8E3` ice — the default), **verdigris** (`#2F6F6A` both themes), **ice** (`#D2E8E3` both themes). Never navy.
 
 ## Logo / lockup
 Logo redesign tracked separately (OpenDesign) — **not final**. Site uses the text lockup "Built by Vega · Run by V" in EB Garamond with the split-V rendered via CSS. Favicon is a simple orange V stroke (inline SVG data URI).

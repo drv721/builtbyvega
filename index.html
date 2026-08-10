@@ -196,6 +196,13 @@ h1.headline{
 .visual-card .v-svg-core{fill:var(--accent)}
 .visual-card .v-svg-ring{stroke:var(--accent);opacity:.45}
 
+/* v15: fill the visual-card — real status content, no fake stats */
+.visual-card .vc-stack{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;position:relative;z-index:1}
+.visual-card .vc-stack svg{width:clamp(56px,9vw,84px);height:auto}
+.visual-card .vc-status{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tert);display:inline-flex;align-items:center;gap:7px}
+.visual-card .vc-status .vc-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px color-mix(in srgb,var(--accent) 60%,transparent)}
+.visual-card .vc-line{font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:var(--ink);letter-spacing:-0.01em;line-height:1.35}
+
 /* ---------- contact ---------- */
 .contact-panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:clamp(28px,5vw,44px);text-align:center;position:relative;overflow:hidden}
 .contact-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--tert),transparent)}
@@ -223,7 +230,7 @@ footer .v-console{font-family:'JetBrains Mono',monospace;font-size:10px;color:va
 
 /* headline split-V accent (two halves: navy/ember light, ice/ember dark) */
 h1.headline .split-v{
-  background-image:linear-gradient(100deg, var(--split-a) 50%, var(--split-b) 50%);
+  background-image:linear-gradient(72deg, var(--split-a) 50.5%, var(--split-b) 49.5%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   display:inline-block;
 }
@@ -231,10 +238,10 @@ h1.headline .split-v{
 .wave-divider{
   width:84px;height:24px;margin:18px auto;display:block;pointer-events:none;
 }
-html.light .wave-divider .w-line{stroke:var(--accent);stroke-width:1.6;stroke-linecap:round;fill:none}
-html.light .wave-divider .w-hash{stroke:var(--accent);stroke-width:1.4;stroke-linecap:round}
-html.dark .wave-divider .w-line{stroke:#D2E8E3;stroke-width:1.6;stroke-linecap:round;fill:none}
-html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:round}
+html.light .wave-divider .w-line{stroke:var(--wave);stroke-width:1.6;stroke-linecap:round;fill:none}
+html.light .wave-divider .w-hash{stroke:var(--wave);stroke-width:1.4;stroke-linecap:round}
+html.dark .wave-divider .w-line{stroke:var(--wave);stroke-width:1.6;stroke-linecap:round;fill:none}
+html.dark .wave-divider .w-hash{stroke:var(--wave);stroke-width:1.4;stroke-linecap:round}
 /* "That's where we come in." — own line, not italic, not shrunk, ember (CTA color) */
 .promise-outcome{
   font-family:'Inter',sans-serif;font-style:normal;font-weight:600;
@@ -244,6 +251,18 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
 
+/* v15: wave color variants */
+html.light{--wave:var(--accent);}
+html.dark{--wave:#D2E8E3;}
+
+/* underine 'activated' in tagline — logo-creation style */
+.tagline .underline-mark{
+  background-image:linear-gradient(var(--accent),var(--accent));
+  background-repeat:no-repeat;
+  background-size:100% 4px;
+  background-position:0 92%;
+  padding-bottom:3px;
+}
 </style>
 </head>
 <body data-theme="light">
@@ -255,8 +274,8 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   <div class="cmd-bar">
     <div class="cmd-dot"></div>
     <div class="cmd-chip live">V active</div>
-    <div class="cmd-chip link"><a href="#work" style="color:inherit;text-decoration:none">WORK</a></div>
     <div class="cmd-chip link"><a href="#about" style="color:inherit;text-decoration:none">THE STUDIO</a></div>
+    <div class="cmd-chip link"><a href="#work" style="color:inherit;text-decoration:none">WORK</a></div>
     <div class="cmd-chip link"><a href="#services" style="color:inherit;text-decoration:none">WHAT WE BUILD</a></div>
     <div class="cmd-chip link"><a href="#contact" style="color:inherit;text-decoration:none">CONTACT</a></div>
     <div class="cmd-chip theme-btn" id="themeBtn" title="Toggle theme">◐ <span id="themeLabel">auto</span></div>
@@ -266,7 +285,7 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
 <!-- ============ HERO ============ -->
 <section class="hero">
   <h1 class="headline">Built by <span class="split-v" aria-hidden="true">V</span>ega</h1>
-  <div class="tagline">Ideas, activated.</div>
+  <div class="tagline">Ideas, <span class="underline-mark">activated</span>.</div>
   <svg class="wave-divider" viewBox="0 0 84 24" fill="none" aria-hidden="true">
     <line class="w-hash" x1="30.5" y1="19.5" x2="37.5" y2="4.5"/>
     <line class="w-hash" x1="46.5" y1="19.5" x2="53.5" y2="4.5"/>
@@ -277,11 +296,42 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
   <a href="#contact" class="cta">Let&rsquo;s build something →</a>
 </section>
 
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="section-head">
+    <span class="s-label">The studio</span>
+    <span class="s-index">/ 02</span>
+  </div>
+  <div class="about">
+    <div class="about-content">
+      <h2>Daniel Vega,<br>with V at the controls</h2>
+      <p>Daniel runs the studio. V runs the tools. Together they move fast, ship clean, and build things that last &mdash; without the overhead of a traditional agency.</p>
+      <div class="v-line">V &mdash; always running</div>
+    </div>
+    <div class="visual-card">
+      <div class="vc-stack">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <line class="v-svg-line" x1="10" y1="60" x2="60" y2="10"/>
+          <line class="v-svg-line" x1="110" y1="60" x2="60" y2="10"/>
+          <line class="v-svg-line" x1="60" y1="10" x2="60" y2="110"/>
+          <circle class="v-svg-dot" cx="10" cy="60" r="3"/>
+          <circle class="v-svg-dot" cx="110" cy="60" r="3"/>
+          <circle class="v-svg-dot" cx="60" cy="110" r="3"/>
+          <circle class="v-svg-ring" cx="60" cy="10" r="12" fill="none" stroke-width="1.5"/>
+          <circle class="v-svg-core" cx="60" cy="10" r="3"/>
+        </svg>
+        <div class="vc-status"><span class="vc-dot"></span>V active</div>
+        <div class="vc-line">Daniel runs the studio.<br>V runs the tools.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WORK ============ -->
 <section class="section" id="work">
   <div class="section-head">
     <span class="s-label">The work</span>
-    <span class="s-index">/ 02</span>
+    <span class="s-index">/ 03</span>
   </div>
   <div class="work-grid">
     <a class="work-card" href="https://drv721.github.io/murakami/" target="_blank" rel="noopener">
@@ -308,33 +358,6 @@ html.dark .wave-divider .w-hash{stroke:#D2E8E3;stroke-width:1.4;stroke-linecap:r
       <p>Every project here started as an idea and a note. Yours is next &mdash; bring us the rough version and we&#39;ll make it real.</p>
       <span class="wc-link">Start a conversation</span>
     </a>
-  </div>
-</section>
-
-<!-- ============ ABOUT ============ -->
-<section class="section" id="about">
-  <div class="section-head">
-    <span class="s-label">The studio</span>
-    <span class="s-index">/ 03</span>
-  </div>
-  <div class="about">
-    <div class="about-content">
-      <h2>Daniel Vega,<br>with V at the controls</h2>
-      <p>Daniel runs the studio. V runs the tools. Together they move fast, ship clean, and build things that last &mdash; without the overhead of a traditional agency.</p>
-      <div class="v-line">V &mdash; always running</div>
-    </div>
-    <div class="visual-card">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <line class="v-svg-line" x1="10" y1="60" x2="60" y2="10"/>
-        <line class="v-svg-line" x1="110" y1="60" x2="60" y2="10"/>
-        <line class="v-svg-line" x1="60" y1="10" x2="60" y2="110"/>
-        <circle class="v-svg-dot" cx="10" cy="60" r="3"/>
-        <circle class="v-svg-dot" cx="110" cy="60" r="3"/>
-        <circle class="v-svg-dot" cx="60" cy="110" r="3"/>
-        <circle class="v-svg-ring" cx="60" cy="10" r="12" fill="none" stroke-width="1.5"/>
-        <circle class="v-svg-core" cx="60" cy="10" r="3"/>
-      </svg>
-    </div>
   </div>
 </section>
 
